@@ -34,7 +34,7 @@ public class JsonObjectDecoderTest {
                                                                 String[] array, String[] result) {
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder(true));
 
-        boolean dataAvailable = false;
+        boolean dataAvailable;
         for (String part : array) {
             dataAvailable = ch.writeInbound(Unpooled.copiedBuffer(part, CharsetUtil.UTF_8));
             if (indexDataAvailable > 0) {
@@ -121,14 +121,14 @@ public class JsonObjectDecoderTest {
 
     @Test
     public void testStreamJsonArrayOverMultipleWrites1() {
-        String[] array = new String[]{
+        String[] array = {
                 "   [{\"test",
                 "case\"  : \"\\\"}]Escaped dou\\\"ble quotes \\\" in JSON str\\\"ing\"",
                 "  }\n\n    , ",
                 "{\"testcase\" : \"Streaming string me",
                 "ssage\"} ]      "
         };
-        String[] result = new String[]{
+        String[] result = {
                 "{\"testcase\"  : \"\\\"}]Escaped dou\\\"ble quotes \\\" in JSON str\\\"ing\"  }",
                 "{\"testcase\" : \"Streaming string message\"}"
         };
@@ -137,14 +137,14 @@ public class JsonObjectDecoderTest {
 
     @Test
     public void testStreamJsonArrayOverMultipleWrites2() {
-        String[] array = new String[]{
+        String[] array = {
                 "   [{\"test",
                 "case\"  : \"\\\"}]Escaped dou\\\"ble quotes \\\" in JSON str\\\"ing\"",
                 "  }\n\n    , {\"test",
                 "case\" : \"Streaming string me",
                 "ssage\"} ]      "
         };
-        String[] result = new String[]{
+        String[] result = {
                 "{\"testcase\"  : \"\\\"}]Escaped dou\\\"ble quotes \\\" in JSON str\\\"ing\"  }",
                 "{\"testcase\" : \"Streaming string message\"}"
         };
@@ -153,14 +153,14 @@ public class JsonObjectDecoderTest {
 
     @Test
     public void testStreamJsonArrayOverMultipleWrites3() {
-        String[] array = new String[]{
+        String[] array = {
                 "   [{\"test",
                 "case\"  : \"\\\"}]Escaped dou\\\"ble quotes \\\" in JSON str\\\"ing\"",
                 "  }\n\n    , [{\"test",
                 "case\" : \"Streaming string me",
                 "ssage\"}] ]      "
         };
-        String[] result = new String[]{
+        String[] result = {
                 "{\"testcase\"  : \"\\\"}]Escaped dou\\\"ble quotes \\\" in JSON str\\\"ing\"  }",
                 "[{\"testcase\" : \"Streaming string message\"}]"
         };

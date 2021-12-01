@@ -52,7 +52,7 @@ public class ProtobufVarint32LengthFieldPrepender extends MessageToByteEncoder<B
                 out.writeByte(value);
                 return;
             } else {
-                out.writeByte((value & 0x7F) | 0x80);
+                out.writeByte(value & 0x7F | 0x80);
                 value >>>= 7;
             }
         }
@@ -65,16 +65,16 @@ public class ProtobufVarint32LengthFieldPrepender extends MessageToByteEncoder<B
      * @return size of value encoded as protobuf varint32.
      */
     static int computeRawVarint32Size(final int value) {
-        if ((value & (0xffffffff << 7)) == 0) {
+        if ((value & 0xffffffff << 7) == 0) {
             return 1;
         }
-        if ((value & (0xffffffff << 14)) == 0) {
+        if ((value & 0xffffffff << 14) == 0) {
             return 2;
         }
-        if ((value & (0xffffffff << 21)) == 0) {
+        if ((value & 0xffffffff << 21) == 0) {
             return 3;
         }
-        if ((value & (0xffffffff << 28)) == 0) {
+        if ((value & 0xffffffff << 28) == 0) {
             return 4;
         }
         return 5;
