@@ -30,6 +30,30 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonObjectDecoderTest {
+    private static void doTestStreamJsonArrayOverMultipleWrites(int indexDataAvailable,
+                                                                String[] array, String[] result) {
+        EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder(true));
+
+        boolean dataAvailable = false;
+        for (String part : array) {
+            dataAvailable = ch.writeInbound(Unpooled.copiedBuffer(part, CharsetUtil.UTF_8));
+            if (indexDataAvailable > 0) {
+                assertFalse(dataAvailable);
+            } else {
+                assertTrue(dataAvailable);
+            }
+            indexDataAvailable--;
+        }
+
+        for (String part : result) {
+            ByteBuf res = ch.readInbound();
+            assertEquals(part, res.toString(CharsetUtil.UTF_8));
+            res.release();
+        }
+
+        assertFalse(ch.finish());
+    }
+
     @Test
     public void testJsonObjectOverMultipleWrites() {
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
@@ -141,30 +165,6 @@ public class JsonObjectDecoderTest {
                 "[{\"testcase\" : \"Streaming string message\"}]"
         };
         doTestStreamJsonArrayOverMultipleWrites(2, array, result);
-    }
-
-    private static void doTestStreamJsonArrayOverMultipleWrites(int indexDataAvailable,
-                                                                String[] array, String[] result) {
-        EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder(true));
-
-        boolean dataAvailable = false;
-        for (String part : array) {
-            dataAvailable = ch.writeInbound(Unpooled.copiedBuffer(part, CharsetUtil.UTF_8));
-            if (indexDataAvailable > 0) {
-                assertFalse(dataAvailable);
-            } else {
-                assertTrue(dataAvailable);
-            }
-            indexDataAvailable--;
-        }
-
-        for (String part : result) {
-            ByteBuf res = ch.readInbound();
-            assertEquals(part, res.toString(CharsetUtil.UTF_8));
-            res.release();
-        }
-
-        assertFalse(ch.finish());
     }
 
     @Test

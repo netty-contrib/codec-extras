@@ -22,6 +22,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class ClassResolvers {
 
+    private ClassResolvers() {
+        // Unused
+    }
+
     /**
      * cache disabled
      *
@@ -95,9 +99,5 @@ public final class ClassResolvers {
         }
 
         return PlatformDependent.getClassLoader(ClassResolvers.class);
-    }
-
-    private ClassResolvers() {
-        // Unused
     }
 }

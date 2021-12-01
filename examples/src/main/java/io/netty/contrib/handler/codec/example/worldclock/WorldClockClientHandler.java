@@ -35,10 +35,9 @@ import java.util.regex.Pattern;
 public class WorldClockClientHandler extends SimpleChannelInboundHandler<LocalTimes> {
 
     private static final Pattern DELIM = Pattern.compile("/");
-
+    private final BlockingQueue<LocalTimes> answer = new LinkedBlockingQueue<>();
     // Stateful properties
     private volatile Channel channel;
-    private final BlockingQueue<LocalTimes> answer = new LinkedBlockingQueue<>();
 
     public WorldClockClientHandler() {
         super(false);

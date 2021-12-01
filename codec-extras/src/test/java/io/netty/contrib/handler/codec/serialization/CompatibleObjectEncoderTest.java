@@ -28,15 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class CompatibleObjectEncoderTest {
-    @Test
-    public void testMultipleEncodeReferenceCount() throws Exception {
-        EmbeddedChannel channel = new EmbeddedChannel(new CompatibleObjectEncoder());
-        testEncode(channel, new TestSerializable(6, 8));
-        testEncode(channel, new TestSerializable(10, 5));
-        testEncode(channel, new TestSerializable(1, 5));
-        assertFalse(channel.finishAndReleaseAll());
-    }
-
     private static void testEncode(EmbeddedChannel channel, TestSerializable original)
             throws IOException, ClassNotFoundException {
         channel.writeOutbound(original);
@@ -49,6 +40,15 @@ public class CompatibleObjectEncoderTest {
             buf.release();
             ois.close();
         }
+    }
+
+    @Test
+    public void testMultipleEncodeReferenceCount() throws Exception {
+        EmbeddedChannel channel = new EmbeddedChannel(new CompatibleObjectEncoder());
+        testEncode(channel, new TestSerializable(6, 8));
+        testEncode(channel, new TestSerializable(10, 5));
+        testEncode(channel, new TestSerializable(1, 5));
+        assertFalse(channel.finishAndReleaseAll());
     }
 
     private static final class TestSerializable implements Serializable {

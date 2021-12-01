@@ -45,17 +45,13 @@ public class JsonObjectDecoder extends ByteToMessageDecoder {
     private static final int ST_INIT = 0;
     private static final int ST_DECODING_NORMAL = 1;
     private static final int ST_DECODING_ARRAY_STREAM = 2;
-
-    private int openBraces;
-    private int idx;
-
-    private int lastReaderIndex;
-
-    private int state;
-    private boolean insideString;
-
     private final int maxObjectLength;
     private final boolean streamArrayElements;
+    private int openBraces;
+    private int idx;
+    private int lastReaderIndex;
+    private int state;
+    private boolean insideString;
 
     public JsonObjectDecoder() {
         // 1 MB

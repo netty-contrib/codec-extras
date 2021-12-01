@@ -38,6 +38,10 @@ import static java.util.Calendar.getInstance;
 
 public class WorldClockServerHandler extends SimpleChannelInboundHandler<Locations> {
 
+    private static String toString(Continent c) {
+        return c.name().charAt(0) + c.name().toLowerCase().substring(1);
+    }
+
     @Override
     public void messageReceived(ChannelHandlerContext ctx, Locations locations) throws Exception {
         long currentTime = System.currentTimeMillis();
@@ -71,9 +75,5 @@ public class WorldClockServerHandler extends SimpleChannelInboundHandler<Locatio
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         cause.printStackTrace();
         ctx.close();
-    }
-
-    private static String toString(Continent c) {
-        return c.name().charAt(0) + c.name().toLowerCase().substring(1);
     }
 }

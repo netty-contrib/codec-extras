@@ -81,6 +81,46 @@ public class XmlFrameDecoder extends ByteToMessageDecoder {
         this.maxFrameLength = checkPositive(maxFrameLength, "maxFrameLength");
     }
 
+    private static void fail(ChannelHandlerContext ctx) {
+        ctx.fireExceptionCaught(new CorruptedFrameException("frame contains content before the xml starts"));
+    }
+
+    private static ByteBuf extractFrame(ByteBuf buffer, int index, int length) {
+        return buffer.copy(index, length);
+    }
+
+    /**
+     * Asks whether the given byte is a valid
+     * start char for an xml element name.
+     * <p/>
+     * Please refer to the
+     * <a href="https://www.w3.org/TR/2004/REC-xml11-20040204/#NT-NameStartChar">NameStartChar</a>
+     * formal definition in the W3C XML spec for further info.
+     *
+     * @param b the input char
+     * @return true if the char is a valid start char
+     */
+    private static boolean isValidStartCharForXmlElement(final byte b) {
+        return b >= 'a' && b <= 'z' || b >= 'A' && b <= 'Z' || b == ':' || b == '_';
+    }
+
+    private static boolean isCommentBlockStart(final ByteBuf in, final int i) {
+        return i < in.writerIndex() - 3
+                && in.getByte(i + 2) == '-'
+                && in.getByte(i + 3) == '-';
+    }
+
+    private static boolean isCDATABlockStart(final ByteBuf in, final int i) {
+        return i < in.writerIndex() - 8
+                && in.getByte(i + 2) == '['
+                && in.getByte(i + 3) == 'C'
+                && in.getByte(i + 4) == 'D'
+                && in.getByte(i + 5) == 'A'
+                && in.getByte(i + 6) == 'T'
+                && in.getByte(i + 7) == 'A'
+                && in.getByte(i + 8) == '[';
+    }
+
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
         boolean openingBracketFound = false;
@@ -198,45 +238,5 @@ public class XmlFrameDecoder extends ByteToMessageDecoder {
             throw new TooLongFrameException(
                     "frame length exceeds " + maxFrameLength + " - discarding");
         }
-    }
-
-    private static void fail(ChannelHandlerContext ctx) {
-        ctx.fireExceptionCaught(new CorruptedFrameException("frame contains content before the xml starts"));
-    }
-
-    private static ByteBuf extractFrame(ByteBuf buffer, int index, int length) {
-        return buffer.copy(index, length);
-    }
-
-    /**
-     * Asks whether the given byte is a valid
-     * start char for an xml element name.
-     * <p/>
-     * Please refer to the
-     * <a href="https://www.w3.org/TR/2004/REC-xml11-20040204/#NT-NameStartChar">NameStartChar</a>
-     * formal definition in the W3C XML spec for further info.
-     *
-     * @param b the input char
-     * @return true if the char is a valid start char
-     */
-    private static boolean isValidStartCharForXmlElement(final byte b) {
-        return b >= 'a' && b <= 'z' || b >= 'A' && b <= 'Z' || b == ':' || b == '_';
-    }
-
-    private static boolean isCommentBlockStart(final ByteBuf in, final int i) {
-        return i < in.writerIndex() - 3
-                && in.getByte(i + 2) == '-'
-                && in.getByte(i + 3) == '-';
-    }
-
-    private static boolean isCDATABlockStart(final ByteBuf in, final int i) {
-        return i < in.writerIndex() - 8
-                && in.getByte(i + 2) == '['
-                && in.getByte(i + 3) == 'C'
-                && in.getByte(i + 4) == 'D'
-                && in.getByte(i + 5) == 'A'
-                && in.getByte(i + 6) == 'T'
-                && in.getByte(i + 7) == 'A'
-                && in.getByte(i + 8) == '[';
     }
 }

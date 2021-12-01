@@ -51,6 +51,43 @@ public class XmlFrameDecoderTest {
         );
     }
 
+    private static void testDecodeWithXml(List<String> xmlFrames, Object... expected) {
+        EmbeddedChannel ch = new EmbeddedChannel(new XmlFrameDecoder(1048576));
+        Exception cause = null;
+        try {
+            for (String xmlFrame : xmlFrames) {
+                ch.writeInbound(Unpooled.copiedBuffer(xmlFrame, CharsetUtil.UTF_8));
+            }
+        } catch (Exception e) {
+            cause = e;
+        }
+        List<Object> actual = new ArrayList<>();
+        for (; ; ) {
+            ByteBuf buf = ch.readInbound();
+            if (buf == null) {
+                break;
+            }
+            actual.add(buf.toString(CharsetUtil.UTF_8));
+            buf.release();
+        }
+
+        if (cause != null) {
+            actual.add(cause.getClass());
+        }
+
+        try {
+            List<Object> expectedList = new ArrayList<>();
+            Collections.addAll(expectedList, expected);
+            assertThat(actual).isEqualTo(expectedList);
+        } finally {
+            ch.finish();
+        }
+    }
+
+    private static void testDecodeWithXml(String xml, Object... expected) {
+        testDecodeWithXml(Collections.singletonList(xml), expected);
+    }
+
     @Test
     public void testConstructorWithIllegalArgs01() {
         assertThrows(IllegalArgumentException.class, () -> new XmlFrameDecoder(0));
@@ -156,43 +193,6 @@ public class XmlFrameDecoderTest {
         for (final String xmlSample : xmlSamples) {
             testDecodeWithXml(xmlSample, xmlSample);
         }
-    }
-
-    private static void testDecodeWithXml(List<String> xmlFrames, Object... expected) {
-        EmbeddedChannel ch = new EmbeddedChannel(new XmlFrameDecoder(1048576));
-        Exception cause = null;
-        try {
-            for (String xmlFrame : xmlFrames) {
-                ch.writeInbound(Unpooled.copiedBuffer(xmlFrame, CharsetUtil.UTF_8));
-            }
-        } catch (Exception e) {
-            cause = e;
-        }
-        List<Object> actual = new ArrayList<>();
-        for (; ; ) {
-            ByteBuf buf = ch.readInbound();
-            if (buf == null) {
-                break;
-            }
-            actual.add(buf.toString(CharsetUtil.UTF_8));
-            buf.release();
-        }
-
-        if (cause != null) {
-            actual.add(cause.getClass());
-        }
-
-        try {
-            List<Object> expectedList = new ArrayList<>();
-            Collections.addAll(expectedList, expected);
-            assertThat(actual).isEqualTo(expectedList);
-        } finally {
-            ch.finish();
-        }
-    }
-
-    private static void testDecodeWithXml(String xml, Object... expected) {
-        testDecodeWithXml(Collections.singletonList(xml), expected);
     }
 
     private String sample(String number) throws IOException, URISyntaxException {

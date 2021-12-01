@@ -40,16 +40,6 @@ import io.netty.handler.codec.MessageToByteEncoder;
 @Sharable
 public class ProtobufVarint32LengthFieldPrepender extends MessageToByteEncoder<ByteBuf> {
 
-    @Override
-    protected void encode(
-            ChannelHandlerContext ctx, ByteBuf msg, ByteBuf out) throws Exception {
-        int bodyLen = msg.readableBytes();
-        int headerLen = computeRawVarint32Size(bodyLen);
-        out.ensureWritable(headerLen + bodyLen);
-        writeRawVarint32(out, bodyLen);
-        out.writeBytes(msg, msg.readerIndex(), bodyLen);
-    }
-
     /**
      * Writes protobuf varint32 to (@link ByteBuf).
      *
@@ -88,5 +78,15 @@ public class ProtobufVarint32LengthFieldPrepender extends MessageToByteEncoder<B
             return 4;
         }
         return 5;
+    }
+
+    @Override
+    protected void encode(
+            ChannelHandlerContext ctx, ByteBuf msg, ByteBuf out) throws Exception {
+        int bodyLen = msg.readableBytes();
+        int headerLen = computeRawVarint32Size(bodyLen);
+        out.ensureWritable(headerLen + bodyLen);
+        writeRawVarint32(out, bodyLen);
+        out.writeBytes(msg, msg.readerIndex(), bodyLen);
     }
 }

@@ -41,12 +41,45 @@ import static java.util.Objects.requireNonNull;
 
 @SuppressWarnings("all")
 public final class WorldClockProtocol {
+    private static Descriptors.Descriptor internal_static_io_netty_example_worldclock_Location_descriptor;
+    private static GeneratedMessage.FieldAccessorTable internal_static_io_netty_example_worldclock_Location_fieldAccessorTable;
+    private static Descriptors.Descriptor internal_static_io_netty_example_worldclock_Locations_descriptor;
+    private static GeneratedMessage.FieldAccessorTable internal_static_io_netty_example_worldclock_Locations_fieldAccessorTable;
+    private static Descriptors.Descriptor internal_static_io_netty_example_worldclock_LocalTime_descriptor;
+    private static GeneratedMessage.FieldAccessorTable internal_static_io_netty_example_worldclock_LocalTime_fieldAccessorTable;
+    private static Descriptors.Descriptor internal_static_io_netty_example_worldclock_LocalTimes_descriptor;
+    private static GeneratedMessage.FieldAccessorTable internal_static_io_netty_example_worldclock_LocalTimes_fieldAccessorTable;
+    private static Descriptors.FileDescriptor descriptor;
+
+    static {
+        String[] descriptorData = {"\nBsrc/main/java/io/netty/example/worldcl" + "ock/WorldClockProtocol.proto\022\033io.netty.e" + "xample.worldclock\"S\n\010Location\0229\n\tcontine" + "nt\030\001 \002(\0162&.C" + "ontinent\022\014\n\004city\030\002 \002(\t\"D\n\tLocations\0227\n\010l" + "ocation\030\001 \003(\0132%.io.netty.example.worldcl" + "ock.Location\"\245\001\n\tLocalTime\022\014\n\004year\030\001 \002(\r" + "\022\r\n\005month\030\002 \002(\r\022\022\n\ndayOfMonth\030\004 \002(\r\0229\n\td" + "ayOfWeek\030\005 \002(\0162&.io.netty.example.worldc" + "lock.DayOfWeek\022\014\n\004hour\030\006 \002(\r\022\016\n\006minute\030\007", " \002(\r\022\016\n\006second\030\010 \002(\r\"G\n\nLocalTimes\0229\n\tlo" + "calTime\030\001 \003(\0132&.io.netty.example.worldcl" + "ock.LocalTime*\231\001\n\tContinent\022\n\n\006AFRICA\020\000\022" + "\013\n\007AMERICA\020\001\022\016\n\nANTARCTICA\020\002\022\n\n\006ARCTIC\020\003" + "\022\010\n\004ASIA\020\004\022\014\n\010ATLANTIC\020\005\022\r\n\tAUSTRALIA\020\006\022" + "\n\n\006EUROPE\020\007\022\n\n\006INDIAN\020\010\022\013\n\007MIDEAST\020\t\022\013\n\007" + "PACIFIC\020\n*g\n\tDayOfWeek\022\n\n\006SUNDAY\020\001\022\n\n\006MO" + "NDAY\020\002\022\013\n\007TUESDAY\020\003\022\r\n\tWEDNESDAY\020\004\022\014\n\010TH" + "URSDAY\020\005\022\n\n\006FRIDAY\020\006\022\014\n\010SATURDAY\020\007B\002H\001"};
+        Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+            @Override
+            public ExtensionRegistry assignDescriptors(Descriptors.FileDescriptor root) {
+                descriptor = root;
+                internal_static_io_netty_example_worldclock_Location_descriptor = getDescriptor().getMessageTypes().get(0);
+                internal_static_io_netty_example_worldclock_Location_fieldAccessorTable = new GeneratedMessage.FieldAccessorTable(internal_static_io_netty_example_worldclock_Location_descriptor, new String[]{"Continent", "City",});
+                internal_static_io_netty_example_worldclock_Locations_descriptor = getDescriptor().getMessageTypes().get(1);
+                internal_static_io_netty_example_worldclock_Locations_fieldAccessorTable = new GeneratedMessage.FieldAccessorTable(internal_static_io_netty_example_worldclock_Locations_descriptor, new String[]{"Location",});
+                internal_static_io_netty_example_worldclock_LocalTime_descriptor = getDescriptor().getMessageTypes().get(2);
+                internal_static_io_netty_example_worldclock_LocalTime_fieldAccessorTable = new GeneratedMessage.FieldAccessorTable(internal_static_io_netty_example_worldclock_LocalTime_descriptor, new String[]{"Year", "Month", "DayOfMonth", "DayOfWeek", "Hour", "Minute", "Second",});
+                internal_static_io_netty_example_worldclock_LocalTimes_descriptor = getDescriptor().getMessageTypes().get(3);
+                internal_static_io_netty_example_worldclock_LocalTimes_fieldAccessorTable = new GeneratedMessage.FieldAccessorTable(internal_static_io_netty_example_worldclock_LocalTimes_descriptor, new String[]{"LocalTime",});
+                return null;
+            }
+        };
+        Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new Descriptors.FileDescriptor[]{}, assigner);
+    }
+
     private WorldClockProtocol() {
     }
 
     public static void registerAllExtensions(ExtensionRegistry registry) {
     }
 
+    public static Descriptors.FileDescriptor getDescriptor() {
+        return descriptor;
+    }
     /**
      * Protobuf enum {@code io.netty.example.worldclock.Continent}
      */
@@ -141,11 +174,19 @@ public final class WorldClockProtocol {
          * <code>PACIFIC = 10;</code>
          */
         public static final int PACIFIC_VALUE = 10;
+        private static final Continent[] VALUES = values();
+        private static EnumLiteMap<Continent> internalValueMap = new EnumLiteMap<Continent>() {
+            @Override
+            public Continent findValueByNumber(int number) {
+                return Continent.valueOf(number);
+            }
+        };
+        private final int index;
+        private final int value;
 
-
-        @Override
-        public final int getNumber() {
-            return value;
+        private Continent(int index, int value) {
+            this.index = index;
+            this.value = value;
         }
 
         public static Continent valueOf(int value) {
@@ -181,12 +222,21 @@ public final class WorldClockProtocol {
             return internalValueMap;
         }
 
-        private static EnumLiteMap<Continent> internalValueMap = new EnumLiteMap<Continent>() {
-            @Override
-            public Continent findValueByNumber(int number) {
-                return Continent.valueOf(number);
+        public static final EnumDescriptor getDescriptor() {
+            return WorldClockProtocol.getDescriptor().getEnumTypes().get(0);
+        }
+
+        public static Continent valueOf(EnumValueDescriptor desc) {
+            if (desc.getType() != getDescriptor()) {
+                throw new IllegalArgumentException("EnumValueDescriptor is not for this type.");
             }
-        };
+            return VALUES[desc.getIndex()];
+        }
+
+        @Override
+        public final int getNumber() {
+            return value;
+        }
 
         @Override
         public final EnumValueDescriptor getValueDescriptor() {
@@ -198,30 +248,8 @@ public final class WorldClockProtocol {
             return getDescriptor();
         }
 
-        public static final EnumDescriptor getDescriptor() {
-            return WorldClockProtocol.getDescriptor().getEnumTypes().get(0);
-        }
-
-        private static final Continent[] VALUES = values();
-
-        public static Continent valueOf(EnumValueDescriptor desc) {
-            if (desc.getType() != getDescriptor()) {
-                throw new IllegalArgumentException("EnumValueDescriptor is not for this type.");
-            }
-            return VALUES[desc.getIndex()];
-        }
-
-        private final int index;
-        private final int value;
-
-        private Continent(int index, int value) {
-            this.index = index;
-            this.value = value;
-        }
-
         // @@protoc_insertion_point(enum_scope:Continent)
     }
-
     /**
      * Protobuf enum {@code DayOfWeek}
      */
@@ -284,11 +312,19 @@ public final class WorldClockProtocol {
          * <code>SATURDAY = 7;</code>
          */
         public static final int SATURDAY_VALUE = 7;
+        private static final DayOfWeek[] VALUES = values();
+        private static EnumLiteMap<DayOfWeek> internalValueMap = new EnumLiteMap<DayOfWeek>() {
+            @Override
+            public DayOfWeek findValueByNumber(int number) {
+                return DayOfWeek.valueOf(number);
+            }
+        };
+        private final int index;
+        private final int value;
 
-
-        @Override
-        public final int getNumber() {
-            return value;
+        private DayOfWeek(int index, int value) {
+            this.index = index;
+            this.value = value;
         }
 
         public static DayOfWeek valueOf(int value) {
@@ -316,12 +352,21 @@ public final class WorldClockProtocol {
             return internalValueMap;
         }
 
-        private static EnumLiteMap<DayOfWeek> internalValueMap = new EnumLiteMap<DayOfWeek>() {
-            @Override
-            public DayOfWeek findValueByNumber(int number) {
-                return DayOfWeek.valueOf(number);
+        public static final EnumDescriptor getDescriptor() {
+            return WorldClockProtocol.getDescriptor().getEnumTypes().get(1);
+        }
+
+        public static DayOfWeek valueOf(EnumValueDescriptor desc) {
+            if (desc.getType() != getDescriptor()) {
+                throw new IllegalArgumentException("EnumValueDescriptor is not for this type.");
             }
-        };
+            return VALUES[desc.getIndex()];
+        }
+
+        @Override
+        public final int getNumber() {
+            return value;
+        }
 
         @Override
         public final EnumValueDescriptor getValueDescriptor() {
@@ -333,30 +378,8 @@ public final class WorldClockProtocol {
             return getDescriptor();
         }
 
-        public static final EnumDescriptor getDescriptor() {
-            return WorldClockProtocol.getDescriptor().getEnumTypes().get(1);
-        }
-
-        private static final DayOfWeek[] VALUES = values();
-
-        public static DayOfWeek valueOf(EnumValueDescriptor desc) {
-            if (desc.getType() != getDescriptor()) {
-                throw new IllegalArgumentException("EnumValueDescriptor is not for this type.");
-            }
-            return VALUES[desc.getIndex()];
-        }
-
-        private final int index;
-        private final int value;
-
-        private DayOfWeek(int index, int value) {
-            this.index = index;
-            this.value = value;
-        }
-
         // @@protoc_insertion_point(enum_scope:DayOfWeek)
     }
-
     public interface LocationOrBuilder extends MessageOrBuilder {
 
         // required .Continent continent = 1;
@@ -388,39 +411,188 @@ public final class WorldClockProtocol {
          */
         ByteString getCityBytes();
     }
+    public interface LocationsOrBuilder extends MessageOrBuilder {
+
+        // repeated .Location location = 1;
+
+        /**
+         * <code>repeated .Location location = 1;</code>
+         */
+        java.util.List<WorldClockProtocol.Location> getLocationList();
+
+        /**
+         * <code>repeated .Location location = 1;</code>
+         */
+        WorldClockProtocol.Location getLocation(int index);
+
+        /**
+         * <code>repeated .Location location = 1;</code>
+         */
+        int getLocationCount();
+
+        /**
+         * <code>repeated .Location location = 1;</code>
+         */
+        java.util.List<? extends WorldClockProtocol.LocationOrBuilder> getLocationOrBuilderList();
+
+        /**
+         * <code>repeated .Location location = 1;</code>
+         */
+        WorldClockProtocol.LocationOrBuilder getLocationOrBuilder(int index);
+    }
+    public interface LocalTimeOrBuilder extends MessageOrBuilder {
+
+        // required uint32 year = 1;
+
+        /**
+         * <code>required uint32 year = 1;</code>
+         */
+        boolean hasYear();
+
+        /**
+         * <code>required uint32 year = 1;</code>
+         */
+        int getYear();
+
+        // required uint32 month = 2;
+
+        /**
+         * <code>required uint32 month = 2;</code>
+         */
+        boolean hasMonth();
+
+        /**
+         * <code>required uint32 month = 2;</code>
+         */
+        int getMonth();
+
+        // required uint32 dayOfMonth = 4;
+
+        /**
+         * <code>required uint32 dayOfMonth = 4;</code>
+         */
+        boolean hasDayOfMonth();
+
+        /**
+         * <code>required uint32 dayOfMonth = 4;</code>
+         */
+        int getDayOfMonth();
+
+        // required .DayOfWeek dayOfWeek = 5;
+
+        /**
+         * <code>required .DayOfWeek dayOfWeek = 5;</code>
+         */
+        boolean hasDayOfWeek();
+
+        /**
+         * <code>required .DayOfWeek dayOfWeek = 5;</code>
+         */
+        WorldClockProtocol.DayOfWeek getDayOfWeek();
+
+        // required uint32 hour = 6;
+
+        /**
+         * <code>required uint32 hour = 6;</code>
+         */
+        boolean hasHour();
+
+        /**
+         * <code>required uint32 hour = 6;</code>
+         */
+        int getHour();
+
+        // required uint32 minute = 7;
+
+        /**
+         * <code>required uint32 minute = 7;</code>
+         */
+        boolean hasMinute();
+
+        /**
+         * <code>required uint32 minute = 7;</code>
+         */
+        int getMinute();
+
+        // required uint32 second = 8;
+
+        /**
+         * <code>required uint32 second = 8;</code>
+         */
+        boolean hasSecond();
+
+        /**
+         * <code>required uint32 second = 8;</code>
+         */
+        int getSecond();
+    }
+    public interface LocalTimesOrBuilder extends MessageOrBuilder {
+
+        // repeated .LocalTime localTime = 1;
+
+        /**
+         * <code>repeated .LocalTime localTime = 1;</code>
+         */
+        java.util.List<WorldClockProtocol.LocalTime> getLocalTimeList();
+
+        /**
+         * <code>repeated .LocalTime localTime = 1;</code>
+         */
+        WorldClockProtocol.LocalTime getLocalTime(int index);
+
+        /**
+         * <code>repeated .LocalTime localTime = 1;</code>
+         */
+        int getLocalTimeCount();
+
+        /**
+         * <code>repeated .LocalTime localTime = 1;</code>
+         */
+        java.util.List<? extends WorldClockProtocol.LocalTimeOrBuilder> getLocalTimeOrBuilderList();
+
+        /**
+         * <code>repeated .LocalTime localTime = 1;</code>
+         */
+        WorldClockProtocol.LocalTimeOrBuilder getLocalTimeOrBuilder(int index);
+    }
 
     /**
      * Protobuf type {@code Location}
      */
     public static final class Location extends GeneratedMessage implements LocationOrBuilder {
+        // required .Continent continent = 1;
+        public static final int CONTINENT_FIELD_NUMBER = 1;
+        // required string city = 2;
+        public static final int CITY_FIELD_NUMBER = 2;
+        private static final Location defaultInstance;
+        private static final long serialVersionUID = 0L;
+        public static Parser<Location> PARSER = new AbstractParser<Location>() {
+            @Override
+            public Location parsePartialFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
+                return new Location(input, extensionRegistry);
+            }
+        };
+
+        static {
+            defaultInstance = new Location(true);
+            defaultInstance.initFields();
+        }
+
+        private final UnknownFieldSet unknownFields;
+        private int bitField0_;
+        private WorldClockProtocol.Continent continent_;
+        private Object city_;
+        private byte memoizedIsInitialized = -1;
+        private int memoizedSerializedSize = -1;
+
         // Use Location.newBuilder() to construct.
         private Location(GeneratedMessage.Builder<?> builder) {
             super(builder);
             this.unknownFields = builder.getUnknownFields();
         }
-
         private Location(boolean noInit) {
             this.unknownFields = UnknownFieldSet.getDefaultInstance();
         }
-
-        private static final Location defaultInstance;
-
-        public static Location getDefaultInstance() {
-            return defaultInstance;
-        }
-
-        @Override
-        public Location getDefaultInstanceForType() {
-            return defaultInstance;
-        }
-
-        private final UnknownFieldSet unknownFields;
-
-        @Override
-        public final UnknownFieldSet getUnknownFields() {
-            return this.unknownFields;
-        }
-
         private Location(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
             initFields();
             int mutable_bitField0_ = 0;
@@ -467,8 +639,70 @@ public final class WorldClockProtocol {
             }
         }
 
+        public static Location getDefaultInstance() {
+            return defaultInstance;
+        }
+
         public static final Descriptors.Descriptor getDescriptor() {
             return WorldClockProtocol.internal_static_io_netty_example_worldclock_Location_descriptor;
+        }
+
+        public static WorldClockProtocol.Location parseFrom(ByteString data) throws InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static WorldClockProtocol.Location parseFrom(ByteString data, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static WorldClockProtocol.Location parseFrom(byte[] data) throws InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static WorldClockProtocol.Location parseFrom(byte[] data, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static WorldClockProtocol.Location parseFrom(java.io.InputStream input) throws java.io.IOException {
+            return PARSER.parseFrom(input);
+        }
+
+        public static WorldClockProtocol.Location parseFrom(java.io.InputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+            return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static WorldClockProtocol.Location parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+            return PARSER.parseDelimitedFrom(input);
+        }
+
+        public static WorldClockProtocol.Location parseDelimitedFrom(java.io.InputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+            return PARSER.parseDelimitedFrom(input, extensionRegistry);
+        }
+
+        public static WorldClockProtocol.Location parseFrom(CodedInputStream input) throws java.io.IOException {
+            return PARSER.parseFrom(input);
+        }
+
+        public static WorldClockProtocol.Location parseFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+            return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static Builder newBuilder() {
+            return Builder.create();
+        }
+
+        public static Builder newBuilder(WorldClockProtocol.Location prototype) {
+            return newBuilder().mergeFrom(prototype);
+        }
+
+        @Override
+        public Location getDefaultInstanceForType() {
+            return defaultInstance;
+        }
+
+        @Override
+        public final UnknownFieldSet getUnknownFields() {
+            return this.unknownFields;
         }
 
         @Override
@@ -476,22 +710,10 @@ public final class WorldClockProtocol {
             return WorldClockProtocol.internal_static_io_netty_example_worldclock_Location_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.Location.class, WorldClockProtocol.Location.Builder.class);
         }
 
-        public static Parser<Location> PARSER = new AbstractParser<Location>() {
-            @Override
-            public Location parsePartialFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
-                return new Location(input, extensionRegistry);
-            }
-        };
-
         @Override
         public Parser<Location> getParserForType() {
             return PARSER;
         }
-
-        private int bitField0_;
-        // required .Continent continent = 1;
-        public static final int CONTINENT_FIELD_NUMBER = 1;
-        private WorldClockProtocol.Continent continent_;
 
         /**
          * <code>required .Continent continent = 1;</code>
@@ -508,10 +730,6 @@ public final class WorldClockProtocol {
         public WorldClockProtocol.Continent getContinent() {
             return continent_;
         }
-
-        // required string city = 2;
-        public static final int CITY_FIELD_NUMBER = 2;
-        private Object city_;
 
         /**
          * <code>required string city = 2;</code>
@@ -559,8 +777,6 @@ public final class WorldClockProtocol {
             city_ = "";
         }
 
-        private byte memoizedIsInitialized = -1;
-
         @Override
         public final boolean isInitialized() {
             byte isInitialized = memoizedIsInitialized;
@@ -590,8 +806,6 @@ public final class WorldClockProtocol {
             getUnknownFields().writeTo(output);
         }
 
-        private int memoizedSerializedSize = -1;
-
         @Override
         public int getSerializedSize() {
             int size = memoizedSerializedSize;
@@ -609,64 +823,14 @@ public final class WorldClockProtocol {
             return size;
         }
 
-        private static final long serialVersionUID = 0L;
-
         @Override
         protected Object writeReplace() throws java.io.ObjectStreamException {
             return super.writeReplace();
         }
 
-        public static WorldClockProtocol.Location parseFrom(ByteString data) throws InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static WorldClockProtocol.Location parseFrom(ByteString data, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static WorldClockProtocol.Location parseFrom(byte[] data) throws InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static WorldClockProtocol.Location parseFrom(byte[] data, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static WorldClockProtocol.Location parseFrom(java.io.InputStream input) throws java.io.IOException {
-            return PARSER.parseFrom(input);
-        }
-
-        public static WorldClockProtocol.Location parseFrom(java.io.InputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return PARSER.parseFrom(input, extensionRegistry);
-        }
-
-        public static WorldClockProtocol.Location parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-            return PARSER.parseDelimitedFrom(input);
-        }
-
-        public static WorldClockProtocol.Location parseDelimitedFrom(java.io.InputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return PARSER.parseDelimitedFrom(input, extensionRegistry);
-        }
-
-        public static WorldClockProtocol.Location parseFrom(CodedInputStream input) throws java.io.IOException {
-            return PARSER.parseFrom(input);
-        }
-
-        public static WorldClockProtocol.Location parseFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return PARSER.parseFrom(input, extensionRegistry);
-        }
-
-        public static Builder newBuilder() {
-            return Builder.create();
-        }
-
         @Override
         public Builder newBuilderForType() {
             return newBuilder();
-        }
-
-        public static Builder newBuilder(WorldClockProtocol.Location prototype) {
-            return newBuilder().mergeFrom(prototype);
         }
 
         @Override
@@ -684,14 +848,11 @@ public final class WorldClockProtocol {
          * Protobuf type {@code Location}
          */
         public static final class Builder extends GeneratedMessage.Builder<Builder> implements WorldClockProtocol.LocationOrBuilder {
-            public static final Descriptors.Descriptor getDescriptor() {
-                return WorldClockProtocol.internal_static_io_netty_example_worldclock_Location_descriptor;
-            }
-
-            @Override
-            protected FieldAccessorTable internalGetFieldAccessorTable() {
-                return WorldClockProtocol.internal_static_io_netty_example_worldclock_Location_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.Location.class, WorldClockProtocol.Location.Builder.class);
-            }
+            private int bitField0_;
+            // required .Continent continent = 1;
+            private WorldClockProtocol.Continent continent_ = WorldClockProtocol.Continent.AFRICA;
+            // required string city = 2;
+            private Object city_ = "";
 
             // Construct using WorldClockProtocol.Location.newBuilder()
             private Builder() {
@@ -703,13 +864,22 @@ public final class WorldClockProtocol {
                 maybeForceBuilderInitialization();
             }
 
-            private void maybeForceBuilderInitialization() {
-                if (GeneratedMessage.alwaysUseFieldBuilders) {
-                }
+            public static final Descriptors.Descriptor getDescriptor() {
+                return WorldClockProtocol.internal_static_io_netty_example_worldclock_Location_descriptor;
             }
 
             private static Builder create() {
                 return new Builder();
+            }
+
+            @Override
+            protected FieldAccessorTable internalGetFieldAccessorTable() {
+                return WorldClockProtocol.internal_static_io_netty_example_worldclock_Location_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.Location.class, WorldClockProtocol.Location.Builder.class);
+            }
+
+            private void maybeForceBuilderInitialization() {
+                if (GeneratedMessage.alwaysUseFieldBuilders) {
+                }
             }
 
             @Override
@@ -817,11 +987,6 @@ public final class WorldClockProtocol {
                 return this;
             }
 
-            private int bitField0_;
-
-            // required .Continent continent = 1;
-            private WorldClockProtocol.Continent continent_ = WorldClockProtocol.Continent.AFRICA;
-
             /**
              * <code>required .Continent continent = 1;</code>
              */
@@ -859,9 +1024,6 @@ public final class WorldClockProtocol {
                 return this;
             }
 
-            // required string city = 2;
-            private Object city_ = "";
-
             /**
              * <code>required string city = 2;</code>
              */
@@ -888,6 +1050,17 @@ public final class WorldClockProtocol {
             /**
              * <code>required string city = 2;</code>
              */
+            public Builder setCity(String value) {
+                requireNonNull(value, "value");
+                bitField0_ |= 0x00000002;
+                city_ = value;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>required string city = 2;</code>
+             */
             @Override
             public ByteString getCityBytes() {
                 Object ref = city_;
@@ -903,7 +1076,7 @@ public final class WorldClockProtocol {
             /**
              * <code>required string city = 2;</code>
              */
-            public Builder setCity(String value) {
+            public Builder setCityBytes(ByteString value) {
                 requireNonNull(value, "value");
                 bitField0_ |= 0x00000002;
                 city_ = value;
@@ -921,62 +1094,37 @@ public final class WorldClockProtocol {
                 return this;
             }
 
-            /**
-             * <code>required string city = 2;</code>
-             */
-            public Builder setCityBytes(ByteString value) {
-                requireNonNull(value, "value");
-                bitField0_ |= 0x00000002;
-                city_ = value;
-                onChanged();
-                return this;
-            }
-
             // @@protoc_insertion_point(builder_scope:Location)
         }
 
-        static {
-            defaultInstance = new Location(true);
-            defaultInstance.initFields();
-        }
-
         // @@protoc_insertion_point(class_scope:Location)
-    }
-
-    public interface LocationsOrBuilder extends MessageOrBuilder {
-
-        // repeated .Location location = 1;
-
-        /**
-         * <code>repeated .Location location = 1;</code>
-         */
-        java.util.List<WorldClockProtocol.Location> getLocationList();
-
-        /**
-         * <code>repeated .Location location = 1;</code>
-         */
-        WorldClockProtocol.Location getLocation(int index);
-
-        /**
-         * <code>repeated .Location location = 1;</code>
-         */
-        int getLocationCount();
-
-        /**
-         * <code>repeated .Location location = 1;</code>
-         */
-        java.util.List<? extends WorldClockProtocol.LocationOrBuilder> getLocationOrBuilderList();
-
-        /**
-         * <code>repeated .Location location = 1;</code>
-         */
-        WorldClockProtocol.LocationOrBuilder getLocationOrBuilder(int index);
     }
 
     /**
      * Protobuf type {@code Locations}
      */
     public static final class Locations extends GeneratedMessage implements LocationsOrBuilder {
+        // repeated .Location location = 1;
+        public static final int LOCATION_FIELD_NUMBER = 1;
+        private static final Locations defaultInstance;
+        private static final long serialVersionUID = 0L;
+        public static Parser<Locations> PARSER = new AbstractParser<Locations>() {
+            @Override
+            public Locations parsePartialFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
+                return new Locations(input, extensionRegistry);
+            }
+        };
+
+        static {
+            defaultInstance = new Locations(true);
+            defaultInstance.initFields();
+        }
+
+        private final UnknownFieldSet unknownFields;
+        private java.util.List<WorldClockProtocol.Location> location_;
+        private byte memoizedIsInitialized = -1;
+        private int memoizedSerializedSize = -1;
+
         // Use Locations.newBuilder() to construct.
         private Locations(GeneratedMessage.Builder<?> builder) {
             super(builder);
@@ -985,24 +1133,6 @@ public final class WorldClockProtocol {
 
         private Locations(boolean noInit) {
             this.unknownFields = UnknownFieldSet.getDefaultInstance();
-        }
-
-        private static final Locations defaultInstance;
-
-        public static Locations getDefaultInstance() {
-            return defaultInstance;
-        }
-
-        @Override
-        public Locations getDefaultInstanceForType() {
-            return defaultInstance;
-        }
-
-        private final UnknownFieldSet unknownFields;
-
-        @Override
-        public final UnknownFieldSet getUnknownFields() {
-            return this.unknownFields;
         }
 
         private Locations(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
@@ -1046,122 +1176,12 @@ public final class WorldClockProtocol {
             }
         }
 
+        public static Locations getDefaultInstance() {
+            return defaultInstance;
+        }
+
         public static final Descriptors.Descriptor getDescriptor() {
             return WorldClockProtocol.internal_static_io_netty_example_worldclock_Locations_descriptor;
-        }
-
-        @Override
-        protected FieldAccessorTable internalGetFieldAccessorTable() {
-            return WorldClockProtocol.internal_static_io_netty_example_worldclock_Locations_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.Locations.class, WorldClockProtocol.Locations.Builder.class);
-        }
-
-        public static Parser<Locations> PARSER = new AbstractParser<Locations>() {
-            @Override
-            public Locations parsePartialFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
-                return new Locations(input, extensionRegistry);
-            }
-        };
-
-        @Override
-        public Parser<Locations> getParserForType() {
-            return PARSER;
-        }
-
-        // repeated .Location location = 1;
-        public static final int LOCATION_FIELD_NUMBER = 1;
-        private java.util.List<WorldClockProtocol.Location> location_;
-
-        /**
-         * <code>repeated .Location location = 1;</code>
-         */
-        @Override
-        public java.util.List<WorldClockProtocol.Location> getLocationList() {
-            return location_;
-        }
-
-        /**
-         * <code>repeated .Location location = 1;</code>
-         */
-        @Override
-        public java.util.List<? extends WorldClockProtocol.LocationOrBuilder> getLocationOrBuilderList() {
-            return location_;
-        }
-
-        /**
-         * <code>repeated .Location location = 1;</code>
-         */
-        @Override
-        public int getLocationCount() {
-            return location_.size();
-        }
-
-        /**
-         * <code>repeated .Location location = 1;</code>
-         */
-        @Override
-        public WorldClockProtocol.Location getLocation(int index) {
-            return location_.get(index);
-        }
-
-        /**
-         * <code>repeated .Location location = 1;</code>
-         */
-        @Override
-        public WorldClockProtocol.LocationOrBuilder getLocationOrBuilder(int index) {
-            return location_.get(index);
-        }
-
-        private void initFields() {
-            location_ = java.util.Collections.emptyList();
-        }
-
-        private byte memoizedIsInitialized = -1;
-
-        @Override
-        public final boolean isInitialized() {
-            byte isInitialized = memoizedIsInitialized;
-            if (isInitialized != -1) return isInitialized == 1;
-
-            for (int i = 0; i < getLocationCount(); i++) {
-                if (!getLocation(i).isInitialized()) {
-                    memoizedIsInitialized = 0;
-                    return false;
-                }
-            }
-            memoizedIsInitialized = 1;
-            return true;
-        }
-
-        @Override
-        public void writeTo(CodedOutputStream output) throws java.io.IOException {
-            getSerializedSize();
-            for (int i = 0; i < location_.size(); i++) {
-                output.writeMessage(1, location_.get(i));
-            }
-            getUnknownFields().writeTo(output);
-        }
-
-        private int memoizedSerializedSize = -1;
-
-        @Override
-        public int getSerializedSize() {
-            int size = memoizedSerializedSize;
-            if (size != -1) return size;
-
-            size = 0;
-            for (int i = 0; i < location_.size(); i++) {
-                size += CodedOutputStream.computeMessageSize(1, location_.get(i));
-            }
-            size += getUnknownFields().getSerializedSize();
-            memoizedSerializedSize = size;
-            return size;
-        }
-
-        private static final long serialVersionUID = 0L;
-
-        @Override
-        protected Object writeReplace() throws java.io.ObjectStreamException {
-            return super.writeReplace();
         }
 
         public static WorldClockProtocol.Locations parseFrom(ByteString data) throws InvalidProtocolBufferException {
@@ -1208,13 +1228,120 @@ public final class WorldClockProtocol {
             return Builder.create();
         }
 
+        public static Builder newBuilder(WorldClockProtocol.Locations prototype) {
+            return newBuilder().mergeFrom(prototype);
+        }
+
+        @Override
+        public Locations getDefaultInstanceForType() {
+            return defaultInstance;
+        }
+
+        @Override
+        public final UnknownFieldSet getUnknownFields() {
+            return this.unknownFields;
+        }
+
+        @Override
+        protected FieldAccessorTable internalGetFieldAccessorTable() {
+            return WorldClockProtocol.internal_static_io_netty_example_worldclock_Locations_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.Locations.class, WorldClockProtocol.Locations.Builder.class);
+        }
+
+        @Override
+        public Parser<Locations> getParserForType() {
+            return PARSER;
+        }
+
+        /**
+         * <code>repeated .Location location = 1;</code>
+         */
+        @Override
+        public java.util.List<WorldClockProtocol.Location> getLocationList() {
+            return location_;
+        }
+
+        /**
+         * <code>repeated .Location location = 1;</code>
+         */
+        @Override
+        public java.util.List<? extends WorldClockProtocol.LocationOrBuilder> getLocationOrBuilderList() {
+            return location_;
+        }
+
+        /**
+         * <code>repeated .Location location = 1;</code>
+         */
+        @Override
+        public int getLocationCount() {
+            return location_.size();
+        }
+
+        /**
+         * <code>repeated .Location location = 1;</code>
+         */
+        @Override
+        public WorldClockProtocol.Location getLocation(int index) {
+            return location_.get(index);
+        }
+
+        /**
+         * <code>repeated .Location location = 1;</code>
+         */
+        @Override
+        public WorldClockProtocol.LocationOrBuilder getLocationOrBuilder(int index) {
+            return location_.get(index);
+        }
+
+        private void initFields() {
+            location_ = java.util.Collections.emptyList();
+        }
+
+        @Override
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized != -1) return isInitialized == 1;
+
+            for (int i = 0; i < getLocationCount(); i++) {
+                if (!getLocation(i).isInitialized()) {
+                    memoizedIsInitialized = 0;
+                    return false;
+                }
+            }
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        @Override
+        public void writeTo(CodedOutputStream output) throws java.io.IOException {
+            getSerializedSize();
+            for (int i = 0; i < location_.size(); i++) {
+                output.writeMessage(1, location_.get(i));
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        @Override
+        public int getSerializedSize() {
+            int size = memoizedSerializedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            for (int i = 0; i < location_.size(); i++) {
+                size += CodedOutputStream.computeMessageSize(1, location_.get(i));
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSerializedSize = size;
+            return size;
+        }
+
+        @Override
+        protected Object writeReplace() throws java.io.ObjectStreamException {
+            return super.writeReplace();
+        }
+
         @Override
         public Builder newBuilderForType() {
             return newBuilder();
-        }
-
-        public static Builder newBuilder(WorldClockProtocol.Locations prototype) {
-            return newBuilder().mergeFrom(prototype);
         }
 
         @Override
@@ -1232,14 +1359,10 @@ public final class WorldClockProtocol {
          * Protobuf type {@code Locations}
          */
         public static final class Builder extends GeneratedMessage.Builder<Builder> implements WorldClockProtocol.LocationsOrBuilder {
-            public static final Descriptors.Descriptor getDescriptor() {
-                return WorldClockProtocol.internal_static_io_netty_example_worldclock_Locations_descriptor;
-            }
-
-            @Override
-            protected FieldAccessorTable internalGetFieldAccessorTable() {
-                return WorldClockProtocol.internal_static_io_netty_example_worldclock_Locations_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.Locations.class, WorldClockProtocol.Locations.Builder.class);
-            }
+            private int bitField0_;
+            // repeated .Location location = 1;
+            private java.util.List<WorldClockProtocol.Location> location_ = java.util.Collections.emptyList();
+            private RepeatedFieldBuilder<Location, Location.Builder, LocationOrBuilder> locationBuilder_;
 
             // Construct using WorldClockProtocol.Locations.newBuilder()
             private Builder() {
@@ -1251,14 +1374,23 @@ public final class WorldClockProtocol {
                 maybeForceBuilderInitialization();
             }
 
-            private void maybeForceBuilderInitialization() {
-                if (GeneratedMessage.alwaysUseFieldBuilders) {
-                    getLocationFieldBuilder();
-                }
+            public static final Descriptors.Descriptor getDescriptor() {
+                return WorldClockProtocol.internal_static_io_netty_example_worldclock_Locations_descriptor;
             }
 
             private static Builder create() {
                 return new Builder();
+            }
+
+            @Override
+            protected FieldAccessorTable internalGetFieldAccessorTable() {
+                return WorldClockProtocol.internal_static_io_netty_example_worldclock_Locations_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.Locations.class, WorldClockProtocol.Locations.Builder.class);
+            }
+
+            private void maybeForceBuilderInitialization() {
+                if (GeneratedMessage.alwaysUseFieldBuilders) {
+                    getLocationFieldBuilder();
+                }
             }
 
             @Override
@@ -1381,19 +1513,12 @@ public final class WorldClockProtocol {
                 return this;
             }
 
-            private int bitField0_;
-
-            // repeated .Location location = 1;
-            private java.util.List<WorldClockProtocol.Location> location_ = java.util.Collections.emptyList();
-
             private void ensureLocationIsMutable() {
                 if (!((bitField0_ & 0x00000001) == 0x00000001)) {
                     location_ = new java.util.ArrayList<WorldClockProtocol.Location>(location_);
                     bitField0_ |= 0x00000001;
                 }
             }
-
-            private RepeatedFieldBuilder<Location, Location.Builder, LocationOrBuilder> locationBuilder_;
 
             /**
              * <code>repeated .Location location = 1;</code>
@@ -1623,105 +1748,52 @@ public final class WorldClockProtocol {
             // @@protoc_insertion_point(builder_scope:Locations)
         }
 
-        static {
-            defaultInstance = new Locations(true);
-            defaultInstance.initFields();
-        }
-
         // @@protoc_insertion_point(class_scope:Locations)
-    }
-
-    public interface LocalTimeOrBuilder extends MessageOrBuilder {
-
-        // required uint32 year = 1;
-
-        /**
-         * <code>required uint32 year = 1;</code>
-         */
-        boolean hasYear();
-
-        /**
-         * <code>required uint32 year = 1;</code>
-         */
-        int getYear();
-
-        // required uint32 month = 2;
-
-        /**
-         * <code>required uint32 month = 2;</code>
-         */
-        boolean hasMonth();
-
-        /**
-         * <code>required uint32 month = 2;</code>
-         */
-        int getMonth();
-
-        // required uint32 dayOfMonth = 4;
-
-        /**
-         * <code>required uint32 dayOfMonth = 4;</code>
-         */
-        boolean hasDayOfMonth();
-
-        /**
-         * <code>required uint32 dayOfMonth = 4;</code>
-         */
-        int getDayOfMonth();
-
-        // required .DayOfWeek dayOfWeek = 5;
-
-        /**
-         * <code>required .DayOfWeek dayOfWeek = 5;</code>
-         */
-        boolean hasDayOfWeek();
-
-        /**
-         * <code>required .DayOfWeek dayOfWeek = 5;</code>
-         */
-        WorldClockProtocol.DayOfWeek getDayOfWeek();
-
-        // required uint32 hour = 6;
-
-        /**
-         * <code>required uint32 hour = 6;</code>
-         */
-        boolean hasHour();
-
-        /**
-         * <code>required uint32 hour = 6;</code>
-         */
-        int getHour();
-
-        // required uint32 minute = 7;
-
-        /**
-         * <code>required uint32 minute = 7;</code>
-         */
-        boolean hasMinute();
-
-        /**
-         * <code>required uint32 minute = 7;</code>
-         */
-        int getMinute();
-
-        // required uint32 second = 8;
-
-        /**
-         * <code>required uint32 second = 8;</code>
-         */
-        boolean hasSecond();
-
-        /**
-         * <code>required uint32 second = 8;</code>
-         */
-        int getSecond();
     }
 
     /**
      * Protobuf type {@code LocalTime}
      */
     public static final class LocalTime extends GeneratedMessage implements LocalTimeOrBuilder {
+        // required uint32 year = 1;
+        public static final int YEAR_FIELD_NUMBER = 1;
+        // required uint32 month = 2;
+        public static final int MONTH_FIELD_NUMBER = 2;
+        // required uint32 dayOfMonth = 4;
+        public static final int DAYOFMONTH_FIELD_NUMBER = 4;
+        // required .DayOfWeek dayOfWeek = 5;
+        public static final int DAYOFWEEK_FIELD_NUMBER = 5;
+        // required uint32 hour = 6;
+        public static final int HOUR_FIELD_NUMBER = 6;
+        // required uint32 minute = 7;
+        public static final int MINUTE_FIELD_NUMBER = 7;
+        // required uint32 second = 8;
+        public static final int SECOND_FIELD_NUMBER = 8;
+        private static final LocalTime defaultInstance;
+        private static final long serialVersionUID = 0L;
+        public static Parser<LocalTime> PARSER = new AbstractParser<LocalTime>() {
+            @Override
+            public LocalTime parsePartialFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
+                return new LocalTime(input, extensionRegistry);
+            }
+        };
+
+        static {
+            defaultInstance = new LocalTime(true);
+            defaultInstance.initFields();
+        }
+
+        private final UnknownFieldSet unknownFields;
+        private int bitField0_;
+        private int year_;
+        private int month_;
+        private int dayOfMonth_;
+        private WorldClockProtocol.DayOfWeek dayOfWeek_;
+        private int hour_;
+        private int minute_;
+        private int second_;
+        private byte memoizedIsInitialized = -1;
+        private int memoizedSerializedSize = -1;
         // Use LocalTime.newBuilder() to construct.
         private LocalTime(GeneratedMessage.Builder<?> builder) {
             super(builder);
@@ -1730,24 +1802,6 @@ public final class WorldClockProtocol {
 
         private LocalTime(boolean noInit) {
             this.unknownFields = UnknownFieldSet.getDefaultInstance();
-        }
-
-        private static final LocalTime defaultInstance;
-
-        public static LocalTime getDefaultInstance() {
-            return defaultInstance;
-        }
-
-        @Override
-        public LocalTime getDefaultInstanceForType() {
-            return defaultInstance;
-        }
-
-        private final UnknownFieldSet unknownFields;
-
-        @Override
-        public final UnknownFieldSet getUnknownFields() {
-            return this.unknownFields;
         }
 
         private LocalTime(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
@@ -1821,8 +1875,70 @@ public final class WorldClockProtocol {
             }
         }
 
+        public static LocalTime getDefaultInstance() {
+            return defaultInstance;
+        }
+
         public static final Descriptors.Descriptor getDescriptor() {
             return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTime_descriptor;
+        }
+
+        public static WorldClockProtocol.LocalTime parseFrom(ByteString data) throws InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static WorldClockProtocol.LocalTime parseFrom(ByteString data, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static WorldClockProtocol.LocalTime parseFrom(byte[] data) throws InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static WorldClockProtocol.LocalTime parseFrom(byte[] data, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static WorldClockProtocol.LocalTime parseFrom(java.io.InputStream input) throws java.io.IOException {
+            return PARSER.parseFrom(input);
+        }
+
+        public static WorldClockProtocol.LocalTime parseFrom(java.io.InputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+            return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static WorldClockProtocol.LocalTime parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+            return PARSER.parseDelimitedFrom(input);
+        }
+
+        public static WorldClockProtocol.LocalTime parseDelimitedFrom(java.io.InputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+            return PARSER.parseDelimitedFrom(input, extensionRegistry);
+        }
+
+        public static WorldClockProtocol.LocalTime parseFrom(CodedInputStream input) throws java.io.IOException {
+            return PARSER.parseFrom(input);
+        }
+
+        public static WorldClockProtocol.LocalTime parseFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+            return PARSER.parseFrom(input, extensionRegistry);
+        }
+
+        public static Builder newBuilder() {
+            return Builder.create();
+        }
+
+        public static Builder newBuilder(WorldClockProtocol.LocalTime prototype) {
+            return newBuilder().mergeFrom(prototype);
+        }
+
+        @Override
+        public LocalTime getDefaultInstanceForType() {
+            return defaultInstance;
+        }
+
+        @Override
+        public final UnknownFieldSet getUnknownFields() {
+            return this.unknownFields;
         }
 
         @Override
@@ -1830,22 +1946,10 @@ public final class WorldClockProtocol {
             return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTime_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.LocalTime.class, WorldClockProtocol.LocalTime.Builder.class);
         }
 
-        public static Parser<LocalTime> PARSER = new AbstractParser<LocalTime>() {
-            @Override
-            public LocalTime parsePartialFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
-                return new LocalTime(input, extensionRegistry);
-            }
-        };
-
         @Override
         public Parser<LocalTime> getParserForType() {
             return PARSER;
         }
-
-        private int bitField0_;
-        // required uint32 year = 1;
-        public static final int YEAR_FIELD_NUMBER = 1;
-        private int year_;
 
         /**
          * <code>required uint32 year = 1;</code>
@@ -1863,10 +1967,6 @@ public final class WorldClockProtocol {
             return year_;
         }
 
-        // required uint32 month = 2;
-        public static final int MONTH_FIELD_NUMBER = 2;
-        private int month_;
-
         /**
          * <code>required uint32 month = 2;</code>
          */
@@ -1882,10 +1982,6 @@ public final class WorldClockProtocol {
         public int getMonth() {
             return month_;
         }
-
-        // required uint32 dayOfMonth = 4;
-        public static final int DAYOFMONTH_FIELD_NUMBER = 4;
-        private int dayOfMonth_;
 
         /**
          * <code>required uint32 dayOfMonth = 4;</code>
@@ -1903,10 +1999,6 @@ public final class WorldClockProtocol {
             return dayOfMonth_;
         }
 
-        // required .DayOfWeek dayOfWeek = 5;
-        public static final int DAYOFWEEK_FIELD_NUMBER = 5;
-        private WorldClockProtocol.DayOfWeek dayOfWeek_;
-
         /**
          * <code>required .DayOfWeek dayOfWeek = 5;</code>
          */
@@ -1922,10 +2014,6 @@ public final class WorldClockProtocol {
         public WorldClockProtocol.DayOfWeek getDayOfWeek() {
             return dayOfWeek_;
         }
-
-        // required uint32 hour = 6;
-        public static final int HOUR_FIELD_NUMBER = 6;
-        private int hour_;
 
         /**
          * <code>required uint32 hour = 6;</code>
@@ -1943,10 +2031,6 @@ public final class WorldClockProtocol {
             return hour_;
         }
 
-        // required uint32 minute = 7;
-        public static final int MINUTE_FIELD_NUMBER = 7;
-        private int minute_;
-
         /**
          * <code>required uint32 minute = 7;</code>
          */
@@ -1962,10 +2046,6 @@ public final class WorldClockProtocol {
         public int getMinute() {
             return minute_;
         }
-
-        // required uint32 second = 8;
-        public static final int SECOND_FIELD_NUMBER = 8;
-        private int second_;
 
         /**
          * <code>required uint32 second = 8;</code>
@@ -1992,8 +2072,6 @@ public final class WorldClockProtocol {
             minute_ = 0;
             second_ = 0;
         }
-
-        private byte memoizedIsInitialized = -1;
 
         @Override
         public final boolean isInitialized() {
@@ -2059,8 +2137,6 @@ public final class WorldClockProtocol {
             getUnknownFields().writeTo(output);
         }
 
-        private int memoizedSerializedSize = -1;
-
         @Override
         public int getSerializedSize() {
             int size = memoizedSerializedSize;
@@ -2093,64 +2169,14 @@ public final class WorldClockProtocol {
             return size;
         }
 
-        private static final long serialVersionUID = 0L;
-
         @Override
         protected Object writeReplace() throws java.io.ObjectStreamException {
             return super.writeReplace();
         }
 
-        public static WorldClockProtocol.LocalTime parseFrom(ByteString data) throws InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static WorldClockProtocol.LocalTime parseFrom(ByteString data, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static WorldClockProtocol.LocalTime parseFrom(byte[] data) throws InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static WorldClockProtocol.LocalTime parseFrom(byte[] data, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static WorldClockProtocol.LocalTime parseFrom(java.io.InputStream input) throws java.io.IOException {
-            return PARSER.parseFrom(input);
-        }
-
-        public static WorldClockProtocol.LocalTime parseFrom(java.io.InputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return PARSER.parseFrom(input, extensionRegistry);
-        }
-
-        public static WorldClockProtocol.LocalTime parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-            return PARSER.parseDelimitedFrom(input);
-        }
-
-        public static WorldClockProtocol.LocalTime parseDelimitedFrom(java.io.InputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return PARSER.parseDelimitedFrom(input, extensionRegistry);
-        }
-
-        public static WorldClockProtocol.LocalTime parseFrom(CodedInputStream input) throws java.io.IOException {
-            return PARSER.parseFrom(input);
-        }
-
-        public static WorldClockProtocol.LocalTime parseFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return PARSER.parseFrom(input, extensionRegistry);
-        }
-
-        public static Builder newBuilder() {
-            return Builder.create();
-        }
-
         @Override
         public Builder newBuilderForType() {
             return newBuilder();
-        }
-
-        public static Builder newBuilder(WorldClockProtocol.LocalTime prototype) {
-            return newBuilder().mergeFrom(prototype);
         }
 
         @Override
@@ -2168,14 +2194,21 @@ public final class WorldClockProtocol {
          * Protobuf type {@code LocalTime}
          */
         public static final class Builder extends GeneratedMessage.Builder<Builder> implements WorldClockProtocol.LocalTimeOrBuilder {
-            public static final Descriptors.Descriptor getDescriptor() {
-                return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTime_descriptor;
-            }
-
-            @Override
-            protected FieldAccessorTable internalGetFieldAccessorTable() {
-                return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTime_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.LocalTime.class, WorldClockProtocol.LocalTime.Builder.class);
-            }
+            private int bitField0_;
+            // required uint32 year = 1;
+            private int year_;
+            // required uint32 month = 2;
+            private int month_;
+            // required uint32 dayOfMonth = 4;
+            private int dayOfMonth_;
+            // required .DayOfWeek dayOfWeek = 5;
+            private WorldClockProtocol.DayOfWeek dayOfWeek_ = WorldClockProtocol.DayOfWeek.SUNDAY;
+            // required uint32 hour = 6;
+            private int hour_;
+            // required uint32 minute = 7;
+            private int minute_;
+            // required uint32 second = 8;
+            private int second_;
 
             // Construct using WorldClockProtocol.LocalTime.newBuilder()
             private Builder() {
@@ -2187,13 +2220,22 @@ public final class WorldClockProtocol {
                 maybeForceBuilderInitialization();
             }
 
-            private void maybeForceBuilderInitialization() {
-                if (GeneratedMessage.alwaysUseFieldBuilders) {
-                }
+            public static final Descriptors.Descriptor getDescriptor() {
+                return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTime_descriptor;
             }
 
             private static Builder create() {
                 return new Builder();
+            }
+
+            @Override
+            protected FieldAccessorTable internalGetFieldAccessorTable() {
+                return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTime_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.LocalTime.class, WorldClockProtocol.LocalTime.Builder.class);
+            }
+
+            private void maybeForceBuilderInitialization() {
+                if (GeneratedMessage.alwaysUseFieldBuilders) {
+                }
             }
 
             @Override
@@ -2364,11 +2406,6 @@ public final class WorldClockProtocol {
                 return this;
             }
 
-            private int bitField0_;
-
-            // required uint32 year = 1;
-            private int year_;
-
             /**
              * <code>required uint32 year = 1;</code>
              */
@@ -2404,9 +2441,6 @@ public final class WorldClockProtocol {
                 onChanged();
                 return this;
             }
-
-            // required uint32 month = 2;
-            private int month_;
 
             /**
              * <code>required uint32 month = 2;</code>
@@ -2444,9 +2478,6 @@ public final class WorldClockProtocol {
                 return this;
             }
 
-            // required uint32 dayOfMonth = 4;
-            private int dayOfMonth_;
-
             /**
              * <code>required uint32 dayOfMonth = 4;</code>
              */
@@ -2482,9 +2513,6 @@ public final class WorldClockProtocol {
                 onChanged();
                 return this;
             }
-
-            // required .DayOfWeek dayOfWeek = 5;
-            private WorldClockProtocol.DayOfWeek dayOfWeek_ = WorldClockProtocol.DayOfWeek.SUNDAY;
 
             /**
              * <code>required .DayOfWeek dayOfWeek = 5;</code>
@@ -2523,9 +2551,6 @@ public final class WorldClockProtocol {
                 return this;
             }
 
-            // required uint32 hour = 6;
-            private int hour_;
-
             /**
              * <code>required uint32 hour = 6;</code>
              */
@@ -2562,9 +2587,6 @@ public final class WorldClockProtocol {
                 return this;
             }
 
-            // required uint32 minute = 7;
-            private int minute_;
-
             /**
              * <code>required uint32 minute = 7;</code>
              */
@@ -2600,9 +2622,6 @@ public final class WorldClockProtocol {
                 onChanged();
                 return this;
             }
-
-            // required uint32 second = 8;
-            private int second_;
 
             /**
              * <code>required uint32 second = 8;</code>
@@ -2643,48 +2662,34 @@ public final class WorldClockProtocol {
             // @@protoc_insertion_point(builder_scope:LocalTime)
         }
 
-        static {
-            defaultInstance = new LocalTime(true);
-            defaultInstance.initFields();
-        }
-
         // @@protoc_insertion_point(class_scope:LocalTime)
-    }
-
-    public interface LocalTimesOrBuilder extends MessageOrBuilder {
-
-        // repeated .LocalTime localTime = 1;
-
-        /**
-         * <code>repeated .LocalTime localTime = 1;</code>
-         */
-        java.util.List<WorldClockProtocol.LocalTime> getLocalTimeList();
-
-        /**
-         * <code>repeated .LocalTime localTime = 1;</code>
-         */
-        WorldClockProtocol.LocalTime getLocalTime(int index);
-
-        /**
-         * <code>repeated .LocalTime localTime = 1;</code>
-         */
-        int getLocalTimeCount();
-
-        /**
-         * <code>repeated .LocalTime localTime = 1;</code>
-         */
-        java.util.List<? extends WorldClockProtocol.LocalTimeOrBuilder> getLocalTimeOrBuilderList();
-
-        /**
-         * <code>repeated .LocalTime localTime = 1;</code>
-         */
-        WorldClockProtocol.LocalTimeOrBuilder getLocalTimeOrBuilder(int index);
     }
 
     /**
      * Protobuf type {@code LocalTimes}
      */
     public static final class LocalTimes extends GeneratedMessage implements LocalTimesOrBuilder {
+        // repeated .LocalTime localTime = 1;
+        public static final int LOCALTIME_FIELD_NUMBER = 1;
+        private static final LocalTimes defaultInstance;
+        private static final long serialVersionUID = 0L;
+        public static Parser<LocalTimes> PARSER = new AbstractParser<LocalTimes>() {
+            @Override
+            public LocalTimes parsePartialFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
+                return new LocalTimes(input, extensionRegistry);
+            }
+        };
+
+        static {
+            defaultInstance = new LocalTimes(true);
+            defaultInstance.initFields();
+        }
+
+        private final UnknownFieldSet unknownFields;
+        private java.util.List<WorldClockProtocol.LocalTime> localTime_;
+        private byte memoizedIsInitialized = -1;
+        private int memoizedSerializedSize = -1;
+
         // Use LocalTimes.newBuilder() to construct.
         private LocalTimes(GeneratedMessage.Builder<?> builder) {
             super(builder);
@@ -2693,24 +2698,6 @@ public final class WorldClockProtocol {
 
         private LocalTimes(boolean noInit) {
             this.unknownFields = UnknownFieldSet.getDefaultInstance();
-        }
-
-        private static final LocalTimes defaultInstance;
-
-        public static LocalTimes getDefaultInstance() {
-            return defaultInstance;
-        }
-
-        @Override
-        public LocalTimes getDefaultInstanceForType() {
-            return defaultInstance;
-        }
-
-        private final UnknownFieldSet unknownFields;
-
-        @Override
-        public final UnknownFieldSet getUnknownFields() {
-            return this.unknownFields;
         }
 
         private LocalTimes(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
@@ -2754,122 +2741,12 @@ public final class WorldClockProtocol {
             }
         }
 
+        public static LocalTimes getDefaultInstance() {
+            return defaultInstance;
+        }
+
         public static final Descriptors.Descriptor getDescriptor() {
             return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTimes_descriptor;
-        }
-
-        @Override
-        protected FieldAccessorTable internalGetFieldAccessorTable() {
-            return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTimes_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.LocalTimes.class, WorldClockProtocol.LocalTimes.Builder.class);
-        }
-
-        public static Parser<LocalTimes> PARSER = new AbstractParser<LocalTimes>() {
-            @Override
-            public LocalTimes parsePartialFrom(CodedInputStream input, ExtensionRegistryLite extensionRegistry) throws InvalidProtocolBufferException {
-                return new LocalTimes(input, extensionRegistry);
-            }
-        };
-
-        @Override
-        public Parser<LocalTimes> getParserForType() {
-            return PARSER;
-        }
-
-        // repeated .LocalTime localTime = 1;
-        public static final int LOCALTIME_FIELD_NUMBER = 1;
-        private java.util.List<WorldClockProtocol.LocalTime> localTime_;
-
-        /**
-         * <code>repeated .LocalTime localTime = 1;</code>
-         */
-        @Override
-        public java.util.List<WorldClockProtocol.LocalTime> getLocalTimeList() {
-            return localTime_;
-        }
-
-        /**
-         * <code>repeated .LocalTime localTime = 1;</code>
-         */
-        @Override
-        public java.util.List<? extends WorldClockProtocol.LocalTimeOrBuilder> getLocalTimeOrBuilderList() {
-            return localTime_;
-        }
-
-        /**
-         * <code>repeated .LocalTime localTime = 1;</code>
-         */
-        @Override
-        public int getLocalTimeCount() {
-            return localTime_.size();
-        }
-
-        /**
-         * <code>repeated .LocalTime localTime = 1;</code>
-         */
-        @Override
-        public WorldClockProtocol.LocalTime getLocalTime(int index) {
-            return localTime_.get(index);
-        }
-
-        /**
-         * <code>repeated .LocalTime localTime = 1;</code>
-         */
-        @Override
-        public WorldClockProtocol.LocalTimeOrBuilder getLocalTimeOrBuilder(int index) {
-            return localTime_.get(index);
-        }
-
-        private void initFields() {
-            localTime_ = java.util.Collections.emptyList();
-        }
-
-        private byte memoizedIsInitialized = -1;
-
-        @Override
-        public final boolean isInitialized() {
-            byte isInitialized = memoizedIsInitialized;
-            if (isInitialized != -1) return isInitialized == 1;
-
-            for (int i = 0; i < getLocalTimeCount(); i++) {
-                if (!getLocalTime(i).isInitialized()) {
-                    memoizedIsInitialized = 0;
-                    return false;
-                }
-            }
-            memoizedIsInitialized = 1;
-            return true;
-        }
-
-        @Override
-        public void writeTo(CodedOutputStream output) throws java.io.IOException {
-            getSerializedSize();
-            for (int i = 0; i < localTime_.size(); i++) {
-                output.writeMessage(1, localTime_.get(i));
-            }
-            getUnknownFields().writeTo(output);
-        }
-
-        private int memoizedSerializedSize = -1;
-
-        @Override
-        public int getSerializedSize() {
-            int size = memoizedSerializedSize;
-            if (size != -1) return size;
-
-            size = 0;
-            for (int i = 0; i < localTime_.size(); i++) {
-                size += CodedOutputStream.computeMessageSize(1, localTime_.get(i));
-            }
-            size += getUnknownFields().getSerializedSize();
-            memoizedSerializedSize = size;
-            return size;
-        }
-
-        private static final long serialVersionUID = 0L;
-
-        @Override
-        protected Object writeReplace() throws java.io.ObjectStreamException {
-            return super.writeReplace();
         }
 
         public static WorldClockProtocol.LocalTimes parseFrom(ByteString data) throws InvalidProtocolBufferException {
@@ -2916,13 +2793,120 @@ public final class WorldClockProtocol {
             return Builder.create();
         }
 
+        public static Builder newBuilder(WorldClockProtocol.LocalTimes prototype) {
+            return newBuilder().mergeFrom(prototype);
+        }
+
+        @Override
+        public LocalTimes getDefaultInstanceForType() {
+            return defaultInstance;
+        }
+
+        @Override
+        public final UnknownFieldSet getUnknownFields() {
+            return this.unknownFields;
+        }
+
+        @Override
+        protected FieldAccessorTable internalGetFieldAccessorTable() {
+            return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTimes_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.LocalTimes.class, WorldClockProtocol.LocalTimes.Builder.class);
+        }
+
+        @Override
+        public Parser<LocalTimes> getParserForType() {
+            return PARSER;
+        }
+
+        /**
+         * <code>repeated .LocalTime localTime = 1;</code>
+         */
+        @Override
+        public java.util.List<WorldClockProtocol.LocalTime> getLocalTimeList() {
+            return localTime_;
+        }
+
+        /**
+         * <code>repeated .LocalTime localTime = 1;</code>
+         */
+        @Override
+        public java.util.List<? extends WorldClockProtocol.LocalTimeOrBuilder> getLocalTimeOrBuilderList() {
+            return localTime_;
+        }
+
+        /**
+         * <code>repeated .LocalTime localTime = 1;</code>
+         */
+        @Override
+        public int getLocalTimeCount() {
+            return localTime_.size();
+        }
+
+        /**
+         * <code>repeated .LocalTime localTime = 1;</code>
+         */
+        @Override
+        public WorldClockProtocol.LocalTime getLocalTime(int index) {
+            return localTime_.get(index);
+        }
+
+        /**
+         * <code>repeated .LocalTime localTime = 1;</code>
+         */
+        @Override
+        public WorldClockProtocol.LocalTimeOrBuilder getLocalTimeOrBuilder(int index) {
+            return localTime_.get(index);
+        }
+
+        private void initFields() {
+            localTime_ = java.util.Collections.emptyList();
+        }
+
+        @Override
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized != -1) return isInitialized == 1;
+
+            for (int i = 0; i < getLocalTimeCount(); i++) {
+                if (!getLocalTime(i).isInitialized()) {
+                    memoizedIsInitialized = 0;
+                    return false;
+                }
+            }
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        @Override
+        public void writeTo(CodedOutputStream output) throws java.io.IOException {
+            getSerializedSize();
+            for (int i = 0; i < localTime_.size(); i++) {
+                output.writeMessage(1, localTime_.get(i));
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        @Override
+        public int getSerializedSize() {
+            int size = memoizedSerializedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            for (int i = 0; i < localTime_.size(); i++) {
+                size += CodedOutputStream.computeMessageSize(1, localTime_.get(i));
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSerializedSize = size;
+            return size;
+        }
+
+        @Override
+        protected Object writeReplace() throws java.io.ObjectStreamException {
+            return super.writeReplace();
+        }
+
         @Override
         public Builder newBuilderForType() {
             return newBuilder();
-        }
-
-        public static Builder newBuilder(WorldClockProtocol.LocalTimes prototype) {
-            return newBuilder().mergeFrom(prototype);
         }
 
         @Override
@@ -2940,14 +2924,10 @@ public final class WorldClockProtocol {
          * Protobuf type {@code LocalTimes}
          */
         public static final class Builder extends GeneratedMessage.Builder<Builder> implements WorldClockProtocol.LocalTimesOrBuilder {
-            public static final Descriptors.Descriptor getDescriptor() {
-                return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTimes_descriptor;
-            }
-
-            @Override
-            protected FieldAccessorTable internalGetFieldAccessorTable() {
-                return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTimes_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.LocalTimes.class, WorldClockProtocol.LocalTimes.Builder.class);
-            }
+            private int bitField0_;
+            // repeated .LocalTime localTime = 1;
+            private java.util.List<WorldClockProtocol.LocalTime> localTime_ = java.util.Collections.emptyList();
+            private RepeatedFieldBuilder<WorldClockProtocol.LocalTime, WorldClockProtocol.LocalTime.Builder, WorldClockProtocol.LocalTimeOrBuilder> localTimeBuilder_;
 
             // Construct using WorldClockProtocol.LocalTimes.newBuilder()
             private Builder() {
@@ -2959,14 +2939,23 @@ public final class WorldClockProtocol {
                 maybeForceBuilderInitialization();
             }
 
-            private void maybeForceBuilderInitialization() {
-                if (GeneratedMessage.alwaysUseFieldBuilders) {
-                    getLocalTimeFieldBuilder();
-                }
+            public static final Descriptors.Descriptor getDescriptor() {
+                return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTimes_descriptor;
             }
 
             private static Builder create() {
                 return new Builder();
+            }
+
+            @Override
+            protected FieldAccessorTable internalGetFieldAccessorTable() {
+                return WorldClockProtocol.internal_static_io_netty_example_worldclock_LocalTimes_fieldAccessorTable.ensureFieldAccessorsInitialized(WorldClockProtocol.LocalTimes.class, WorldClockProtocol.LocalTimes.Builder.class);
+            }
+
+            private void maybeForceBuilderInitialization() {
+                if (GeneratedMessage.alwaysUseFieldBuilders) {
+                    getLocalTimeFieldBuilder();
+                }
             }
 
             @Override
@@ -3089,19 +3078,12 @@ public final class WorldClockProtocol {
                 return this;
             }
 
-            private int bitField0_;
-
-            // repeated .LocalTime localTime = 1;
-            private java.util.List<WorldClockProtocol.LocalTime> localTime_ = java.util.Collections.emptyList();
-
             private void ensureLocalTimeIsMutable() {
                 if (!((bitField0_ & 0x00000001) == 0x00000001)) {
                     localTime_ = new java.util.ArrayList<WorldClockProtocol.LocalTime>(localTime_);
                     bitField0_ |= 0x00000001;
                 }
             }
-
-            private RepeatedFieldBuilder<WorldClockProtocol.LocalTime, WorldClockProtocol.LocalTime.Builder, WorldClockProtocol.LocalTimeOrBuilder> localTimeBuilder_;
 
             /**
              * <code>repeated .LocalTime localTime = 1;</code>
@@ -3331,47 +3313,7 @@ public final class WorldClockProtocol {
             // @@protoc_insertion_point(builder_scope:LocalTimes)
         }
 
-        static {
-            defaultInstance = new LocalTimes(true);
-            defaultInstance.initFields();
-        }
-
         // @@protoc_insertion_point(class_scope:LocalTimes)
-    }
-
-    private static Descriptors.Descriptor internal_static_io_netty_example_worldclock_Location_descriptor;
-    private static GeneratedMessage.FieldAccessorTable internal_static_io_netty_example_worldclock_Location_fieldAccessorTable;
-    private static Descriptors.Descriptor internal_static_io_netty_example_worldclock_Locations_descriptor;
-    private static GeneratedMessage.FieldAccessorTable internal_static_io_netty_example_worldclock_Locations_fieldAccessorTable;
-    private static Descriptors.Descriptor internal_static_io_netty_example_worldclock_LocalTime_descriptor;
-    private static GeneratedMessage.FieldAccessorTable internal_static_io_netty_example_worldclock_LocalTime_fieldAccessorTable;
-    private static Descriptors.Descriptor internal_static_io_netty_example_worldclock_LocalTimes_descriptor;
-    private static GeneratedMessage.FieldAccessorTable internal_static_io_netty_example_worldclock_LocalTimes_fieldAccessorTable;
-
-    public static Descriptors.FileDescriptor getDescriptor() {
-        return descriptor;
-    }
-
-    private static Descriptors.FileDescriptor descriptor;
-
-    static {
-        String[] descriptorData = {"\nBsrc/main/java/io/netty/example/worldcl" + "ock/WorldClockProtocol.proto\022\033io.netty.e" + "xample.worldclock\"S\n\010Location\0229\n\tcontine" + "nt\030\001 \002(\0162&.C" + "ontinent\022\014\n\004city\030\002 \002(\t\"D\n\tLocations\0227\n\010l" + "ocation\030\001 \003(\0132%.io.netty.example.worldcl" + "ock.Location\"\245\001\n\tLocalTime\022\014\n\004year\030\001 \002(\r" + "\022\r\n\005month\030\002 \002(\r\022\022\n\ndayOfMonth\030\004 \002(\r\0229\n\td" + "ayOfWeek\030\005 \002(\0162&.io.netty.example.worldc" + "lock.DayOfWeek\022\014\n\004hour\030\006 \002(\r\022\016\n\006minute\030\007", " \002(\r\022\016\n\006second\030\010 \002(\r\"G\n\nLocalTimes\0229\n\tlo" + "calTime\030\001 \003(\0132&.io.netty.example.worldcl" + "ock.LocalTime*\231\001\n\tContinent\022\n\n\006AFRICA\020\000\022" + "\013\n\007AMERICA\020\001\022\016\n\nANTARCTICA\020\002\022\n\n\006ARCTIC\020\003" + "\022\010\n\004ASIA\020\004\022\014\n\010ATLANTIC\020\005\022\r\n\tAUSTRALIA\020\006\022" + "\n\n\006EUROPE\020\007\022\n\n\006INDIAN\020\010\022\013\n\007MIDEAST\020\t\022\013\n\007" + "PACIFIC\020\n*g\n\tDayOfWeek\022\n\n\006SUNDAY\020\001\022\n\n\006MO" + "NDAY\020\002\022\013\n\007TUESDAY\020\003\022\r\n\tWEDNESDAY\020\004\022\014\n\010TH" + "URSDAY\020\005\022\n\n\006FRIDAY\020\006\022\014\n\010SATURDAY\020\007B\002H\001"};
-        Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-            @Override
-            public ExtensionRegistry assignDescriptors(Descriptors.FileDescriptor root) {
-                descriptor = root;
-                internal_static_io_netty_example_worldclock_Location_descriptor = getDescriptor().getMessageTypes().get(0);
-                internal_static_io_netty_example_worldclock_Location_fieldAccessorTable = new GeneratedMessage.FieldAccessorTable(internal_static_io_netty_example_worldclock_Location_descriptor, new String[]{"Continent", "City",});
-                internal_static_io_netty_example_worldclock_Locations_descriptor = getDescriptor().getMessageTypes().get(1);
-                internal_static_io_netty_example_worldclock_Locations_fieldAccessorTable = new GeneratedMessage.FieldAccessorTable(internal_static_io_netty_example_worldclock_Locations_descriptor, new String[]{"Location",});
-                internal_static_io_netty_example_worldclock_LocalTime_descriptor = getDescriptor().getMessageTypes().get(2);
-                internal_static_io_netty_example_worldclock_LocalTime_fieldAccessorTable = new GeneratedMessage.FieldAccessorTable(internal_static_io_netty_example_worldclock_LocalTime_descriptor, new String[]{"Year", "Month", "DayOfMonth", "DayOfWeek", "Hour", "Minute", "Second",});
-                internal_static_io_netty_example_worldclock_LocalTimes_descriptor = getDescriptor().getMessageTypes().get(3);
-                internal_static_io_netty_example_worldclock_LocalTimes_fieldAccessorTable = new GeneratedMessage.FieldAccessorTable(internal_static_io_netty_example_worldclock_LocalTimes_descriptor, new String[]{"LocalTime",});
-                return null;
-            }
-        };
-        Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new Descriptors.FileDescriptor[]{}, assigner);
     }
 
     // @@protoc_insertion_point(outer_class_scope)

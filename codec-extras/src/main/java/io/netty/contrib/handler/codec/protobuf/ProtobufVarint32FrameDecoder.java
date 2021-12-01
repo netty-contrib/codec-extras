@@ -43,26 +43,6 @@ public class ProtobufVarint32FrameDecoder extends ByteToMessageDecoder {
     // TODO maxFrameLength + safe skip + fail-fast option
     //      (just like LengthFieldBasedFrameDecoder)
 
-    @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in)
-            throws Exception {
-        int readerIndex = in.readerIndex();
-        int preIndex = in.readerIndex();
-        int length = readRawVarint32(in);
-        if (preIndex == in.readerIndex()) {
-            return;
-        }
-        if (length < 0) {
-            throw new CorruptedFrameException("negative length: " + length);
-        }
-
-        if (in.readableBytes() < length) {
-            in.readerIndex(readerIndex);
-        } else {
-            ctx.fireChannelRead(in.readRetainedSlice(length));
-        }
-    }
-
     /**
      * Reads variable length 32bit int from buffer
      *
@@ -114,6 +94,26 @@ public class ProtobufVarint32FrameDecoder extends ByteToMessageDecoder {
                 }
             }
             return result;
+        }
+    }
+
+    @Override
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in)
+            throws Exception {
+        int readerIndex = in.readerIndex();
+        int preIndex = in.readerIndex();
+        int length = readRawVarint32(in);
+        if (preIndex == in.readerIndex()) {
+            return;
+        }
+        if (length < 0) {
+            throw new CorruptedFrameException("negative length: " + length);
+        }
+
+        if (in.readableBytes() < length) {
+            in.readerIndex(readerIndex);
+        } else {
+            ctx.fireChannelRead(in.readRetainedSlice(length));
         }
     }
 }
