@@ -31,11 +31,11 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-#      - name: Install SSH key
-#        uses: shimataro/ssh-key-action@v2
-#        with:
-#          key: ${{ secrets.SSH_PRIVATE_KEY_PEM }}
-#          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+      #      - name: Install SSH key
+      #        uses: shimataro/ssh-key-action@v2
+      #        with:
+      #          key: ${{ secrets.SSH_PRIVATE_KEY_PEM }}
+      #          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
 
       - name: Configure Git
         run: |

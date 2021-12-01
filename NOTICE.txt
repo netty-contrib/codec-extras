@@ -32,3 +32,20 @@ This product contains the Maven wrapper scripts from 'Maven Wrapper', that provi
     * license/LICENSE.mvn-wrapper.txt (Apache License 2.0)
   * HOMEPAGE:
     * https://github.com/takari/maven-wrapper
+
+This product optionally depends on 'JBoss Marshalling', an alternative Java
+serialization API, which can be obtained at:
+
+  * LICENSE:
+    * license/LICENSE.jboss-marshalling.txt (Apache License 2.0)
+  * HOMEPAGE:
+    * https://github.com/jboss-remoting/jboss-marshalling
+
+This product contains a modified portion of and optionally depends on 'Protocol Buffers', Google's data
+interchange format, which can be obtained at:
+
+  * LICENSE:
+    * license/LICENSE.protobuf.txt (New BSD License)
+  * HOMEPAGE:
+    * https://github.com/google/protobuf
+
