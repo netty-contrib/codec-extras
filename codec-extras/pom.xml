@@ -86,5 +86,13 @@
             <version>${jboss.marshalling.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- For SocketObjectEchoTest -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-testsuite</artifactId>
+            <version>${netty.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
