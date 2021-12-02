@@ -12,7 +12,7 @@
 
     <artifactId>netty-codec-extras</artifactId>
     <version>${parent.version}</version>
-    <name>Netty/Codec/Template</name>
+    <name>Netty/Codec/Extras</name>
     <packaging>jar</packaging>
 
     <properties>
