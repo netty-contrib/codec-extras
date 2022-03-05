@@ -15,17 +15,17 @@
  */
 package io.netty.contrib.handler.codec.serialization;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToByteEncoder;
+import io.netty5.buffer.ByteBuf;
+import io.netty5.buffer.ByteBufOutputStream;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.handler.codec.MessageToByteEncoder;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 
-import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
+import static io.netty5.util.internal.ObjectUtil.checkPositiveOrZero;
 
 /**
  * An encoder which serializes a Java object into a {@link ByteBuf}

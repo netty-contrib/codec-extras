@@ -15,14 +15,14 @@
  */
 package io.netty.contrib.handler.codec.example.objectecho;
 
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.concurrent.Future;
+import io.netty5.channel.ChannelHandler;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.util.concurrent.Future;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.netty.channel.ChannelFutureListeners.FIRE_EXCEPTION_ON_FAILURE;
+import static io.netty5.channel.ChannelFutureListeners.FIRE_EXCEPTION_ON_FAILURE;
 
 /**
  * Handler implementation for the object echo client.  It initiates the

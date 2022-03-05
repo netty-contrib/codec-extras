@@ -18,17 +18,17 @@ package io.netty.contrib.handler.codec.protobuf;
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandler.Sharable;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelPipeline;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.MessageToMessageEncoder;
+import io.netty5.buffer.ByteBuf;
+import io.netty5.channel.ChannelHandler.Sharable;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.channel.ChannelPipeline;
+import io.netty5.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty5.handler.codec.LengthFieldPrepender;
+import io.netty5.handler.codec.MessageToMessageEncoder;
 
 import java.util.List;
 
-import static io.netty.buffer.Unpooled.wrappedBuffer;
+import static io.netty5.buffer.Unpooled.wrappedBuffer;
 
 /**
  * Encodes the requested <a href="https://github.com/google/protobuf">Google

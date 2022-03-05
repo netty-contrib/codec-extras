@@ -15,13 +15,13 @@
  */
 package io.netty.contrib.handler.codec.xml;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.handler.codec.CorruptedFrameException;
-import io.netty.handler.codec.TooLongFrameException;
+import io.netty5.buffer.ByteBuf;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.handler.codec.ByteToMessageDecoder;
+import io.netty5.handler.codec.CorruptedFrameException;
+import io.netty5.handler.codec.TooLongFrameException;
 
-import static io.netty.util.internal.ObjectUtil.checkPositive;
+import static io.netty5.util.internal.ObjectUtil.checkPositive;
 
 /**
  * A frame decoder for single separate XML based message streams.

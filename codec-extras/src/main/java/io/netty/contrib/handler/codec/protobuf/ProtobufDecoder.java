@@ -19,15 +19,15 @@ import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.ExtensionRegistryLite;
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
-import io.netty.channel.ChannelHandler.Sharable;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelPipeline;
-import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.MessageToMessageDecoder;
+import io.netty5.buffer.ByteBuf;
+import io.netty5.buffer.ByteBufUtil;
+import io.netty5.channel.ChannelHandler.Sharable;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.channel.ChannelPipeline;
+import io.netty5.handler.codec.ByteToMessageDecoder;
+import io.netty5.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty5.handler.codec.LengthFieldPrepender;
+import io.netty5.handler.codec.MessageToMessageDecoder;
 
 import static java.util.Objects.requireNonNull;
 
