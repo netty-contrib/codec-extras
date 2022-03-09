@@ -15,7 +15,7 @@
  */
 package io.netty.contrib.handler.codec.serialization;
 
-import io.netty.util.internal.PlatformDependent;
+import io.netty5.util.internal.PlatformDependent;
 
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;

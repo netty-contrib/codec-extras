@@ -16,13 +16,13 @@
 
 package io.netty.contrib.handler.codec.xml;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.embedded.EmbeddedChannel;
-import io.netty.handler.codec.CorruptedFrameException;
-import io.netty.handler.codec.TooLongFrameException;
-import io.netty.util.CharsetUtil;
-import io.netty.util.internal.EmptyArrays;
+import io.netty5.buffer.ByteBuf;
+import io.netty5.buffer.Unpooled;
+import io.netty5.channel.embedded.EmbeddedChannel;
+import io.netty5.handler.codec.CorruptedFrameException;
+import io.netty5.handler.codec.TooLongFrameException;
+import io.netty5.util.CharsetUtil;
+import io.netty5.util.internal.EmptyArrays;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

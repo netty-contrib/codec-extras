@@ -15,14 +15,14 @@
  */
 package io.netty.contrib.handler.codec.serialization;
 
-import io.netty.bootstrap.Bootstrap;
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.testsuite.transport.socket.AbstractSocketTest;
+import io.netty5.bootstrap.Bootstrap;
+import io.netty5.bootstrap.ServerBootstrap;
+import io.netty5.channel.Channel;
+import io.netty5.channel.ChannelHandler;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.channel.ChannelInitializer;
+import io.netty5.channel.ChannelOption;
+import io.netty5.testsuite.transport.socket.AbstractSocketTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 

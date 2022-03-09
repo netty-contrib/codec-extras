@@ -15,10 +15,10 @@
  */
 package io.netty.contrib.handler.codec.serialization;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty5.buffer.ByteBuf;
+import io.netty5.buffer.ByteBufInputStream;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.handler.codec.LengthFieldBasedFrameDecoder;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

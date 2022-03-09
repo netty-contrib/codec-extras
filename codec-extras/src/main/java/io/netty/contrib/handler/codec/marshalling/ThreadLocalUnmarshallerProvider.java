@@ -15,14 +15,14 @@
  */
 package io.netty.contrib.handler.codec.marshalling;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.concurrent.FastThreadLocal;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.util.concurrent.FastThreadLocal;
 import org.jboss.marshalling.MarshallerFactory;
 import org.jboss.marshalling.MarshallingConfiguration;
 import org.jboss.marshalling.Unmarshaller;
 
 /**
- * {@link io.netty.handler.codec.marshalling.UnmarshallerProvider} implementation which use a {@link ThreadLocal} to store references
+ * {@link io.netty.contrib.handler.codec.marshalling.UnmarshallerProvider} implementation which use a {@link ThreadLocal} to store references
  * to {@link Unmarshaller} instances. This may give you some performance boost if you need to unmarshall
  * many small {@link Object}'s.
  */

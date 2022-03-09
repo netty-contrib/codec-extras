@@ -15,14 +15,14 @@
  */
 package io.netty.contrib.handler.codec.example.worldclock;
 
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.socket.SocketChannel;
+import io.netty5.channel.ChannelInitializer;
+import io.netty5.channel.ChannelPipeline;
+import io.netty5.channel.socket.SocketChannel;
 import io.netty.contrib.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.contrib.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.contrib.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.contrib.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
-import io.netty.handler.ssl.SslContext;
+import io.netty5.handler.ssl.SslContext;
 
 public class WorldClockClientInitializer extends ChannelInitializer<SocketChannel> {
 

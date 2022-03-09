@@ -15,10 +15,10 @@
  */
 package io.netty.contrib.handler.codec.marshalling;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.embedded.EmbeddedChannel;
+import io.netty5.buffer.ByteBuf;
+import io.netty5.buffer.Unpooled;
+import io.netty5.channel.ChannelHandler;
+import io.netty5.channel.embedded.EmbeddedChannel;
 import org.jboss.marshalling.Marshaller;
 import org.jboss.marshalling.MarshallerFactory;
 import org.jboss.marshalling.Marshalling;

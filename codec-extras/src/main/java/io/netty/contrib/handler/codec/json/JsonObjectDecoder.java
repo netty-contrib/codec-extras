@@ -15,16 +15,16 @@
  */
 package io.netty.contrib.handler.codec.json;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelPipeline;
-import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.handler.codec.CorruptedFrameException;
-import io.netty.handler.codec.TooLongFrameException;
+import io.netty5.buffer.ByteBuf;
+import io.netty5.buffer.ByteBufUtil;
+import io.netty5.channel.ChannelHandler;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.channel.ChannelPipeline;
+import io.netty5.handler.codec.ByteToMessageDecoder;
+import io.netty5.handler.codec.CorruptedFrameException;
+import io.netty5.handler.codec.TooLongFrameException;
 
-import static io.netty.util.internal.ObjectUtil.checkPositive;
+import static io.netty5.util.internal.ObjectUtil.checkPositive;
 
 /**
  * Splits a byte stream of JSON objects and arrays into individual objects/arrays and passes them up the

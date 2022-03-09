@@ -15,20 +15,20 @@
  */
 package io.netty.contrib.handler.codec.example.objectecho;
 
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.MultithreadEventLoopGroup;
-import io.netty.channel.nio.NioHandler;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty5.bootstrap.Bootstrap;
+import io.netty5.channel.ChannelInitializer;
+import io.netty5.channel.ChannelPipeline;
+import io.netty5.channel.EventLoopGroup;
+import io.netty5.channel.MultithreadEventLoopGroup;
+import io.netty5.channel.nio.NioHandler;
+import io.netty5.channel.socket.SocketChannel;
+import io.netty5.channel.socket.nio.NioSocketChannel;
 import io.netty.contrib.handler.codec.serialization.ClassResolvers;
 import io.netty.contrib.handler.codec.serialization.ObjectDecoder;
 import io.netty.contrib.handler.codec.serialization.ObjectEncoder;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import io.netty5.handler.ssl.SslContext;
+import io.netty5.handler.ssl.SslContextBuilder;
+import io.netty5.handler.ssl.util.InsecureTrustManagerFactory;
 
 /**
  * Modification of {@code EchoClient} which utilizes Java object serialization.

@@ -17,13 +17,13 @@ package io.netty.contrib.handler.codec.protobuf;
 
 import com.google.protobuf.nano.CodedOutputByteBufferNano;
 import com.google.protobuf.nano.MessageNano;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelPipeline;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.MessageToMessageEncoder;
+import io.netty5.buffer.ByteBuf;
+import io.netty5.channel.ChannelHandler;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.channel.ChannelPipeline;
+import io.netty5.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty5.handler.codec.LengthFieldPrepender;
+import io.netty5.handler.codec.MessageToMessageEncoder;
 
 import java.util.List;
 

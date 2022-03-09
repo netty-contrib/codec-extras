@@ -15,8 +15,8 @@
  */
 package io.netty.contrib.handler.codec.example.objectecho;
 
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
+import io.netty5.channel.ChannelHandler;
+import io.netty5.channel.ChannelHandlerContext;
 
 /**
  * Handles both client-side and server-side handler depending on which

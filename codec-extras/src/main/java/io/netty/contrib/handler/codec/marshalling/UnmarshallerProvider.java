@@ -15,7 +15,7 @@
  */
 package io.netty.contrib.handler.codec.marshalling;
 
-import io.netty.channel.ChannelHandlerContext;
+import io.netty5.channel.ChannelHandlerContext;
 import org.jboss.marshalling.Unmarshaller;
 
 /**

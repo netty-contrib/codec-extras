@@ -15,8 +15,8 @@
  */
 package io.netty.contrib.handler.codec.example.worldclock;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty5.channel.ChannelHandlerContext;
+import io.netty5.channel.SimpleChannelInboundHandler;
 import io.netty.contrib.handler.codec.example.worldclock.WorldClockProtocol.Continent;
 import io.netty.contrib.handler.codec.example.worldclock.WorldClockProtocol.DayOfWeek;
 import io.netty.contrib.handler.codec.example.worldclock.WorldClockProtocol.LocalTime;

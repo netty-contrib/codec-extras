@@ -15,16 +15,16 @@
  */
 package io.netty.contrib.handler.codec.example.worldclock;
 
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.MultithreadEventLoopGroup;
-import io.netty.channel.nio.NioHandler;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.SelfSignedCertificate;
+import io.netty5.bootstrap.ServerBootstrap;
+import io.netty5.channel.EventLoopGroup;
+import io.netty5.channel.MultithreadEventLoopGroup;
+import io.netty5.channel.nio.NioHandler;
+import io.netty5.channel.socket.nio.NioServerSocketChannel;
+import io.netty5.handler.logging.LogLevel;
+import io.netty5.handler.logging.LoggingHandler;
+import io.netty5.handler.ssl.SslContext;
+import io.netty5.handler.ssl.SslContextBuilder;
+import io.netty5.handler.ssl.util.SelfSignedCertificate;
 
 /**
  * Receives a list of continent/city pairs from a {@link WorldClockClient} to
