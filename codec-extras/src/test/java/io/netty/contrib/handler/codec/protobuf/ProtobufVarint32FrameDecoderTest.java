@@ -15,12 +15,12 @@
  */
 package io.netty.contrib.handler.codec.protobuf;
 
-import io.netty5.buffer.ByteBuf;
+import io.netty.buffer.ByteBuf;
 import io.netty5.channel.embedded.EmbeddedChannel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static io.netty5.buffer.Unpooled.wrappedBuffer;
+import static io.netty.buffer.Unpooled.wrappedBuffer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;

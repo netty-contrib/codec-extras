@@ -67,7 +67,8 @@
     </developers>
 
     <properties>
-        <netty.version>5.0.0.Final-SNAPSHOT</netty.version>
+        <nettyByteBuf.version>4.1.75.Final</nettyByteBuf.version>
+        <netty.version>5.0.1.Alpha1-SNAPSHOT</netty.version>
         <netty.build.version>29</netty.build.version>
         <project.scm.id>github</project.scm.id>
         <release.gpg.keyname/>
