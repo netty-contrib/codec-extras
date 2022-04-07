@@ -15,9 +15,9 @@
  */
 package io.netty.contrib.handler.codec.serialization;
 
-import io.netty5.buffer.ByteBuf;
-import io.netty5.buffer.ByteBufOutputStream;
-import io.netty5.buffer.Unpooled;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

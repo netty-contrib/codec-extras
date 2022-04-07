@@ -23,6 +23,11 @@
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
+            <artifactId>netty-buffer</artifactId>
+            <version>${nettyByteBuf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
             <artifactId>netty5-common</artifactId>
             <version>${netty.version}</version>
         </dependency>
