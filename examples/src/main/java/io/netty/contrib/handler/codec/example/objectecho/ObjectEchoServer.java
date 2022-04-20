@@ -62,7 +62,7 @@ public final class ObjectEchoServer {
                         public void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline p = ch.pipeline();
                             if (sslCtx != null) {
-                                p.addLast(sslCtx.newHandler(ch.alloc()));
+                                p.addLast(sslCtx.newHandler(ch.bufferAllocator()));
                             }
                             p.addLast(
                                     new ObjectEncoder(),

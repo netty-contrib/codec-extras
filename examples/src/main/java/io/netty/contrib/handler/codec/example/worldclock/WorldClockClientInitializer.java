@@ -36,7 +36,7 @@ public class WorldClockClientInitializer extends ChannelInitializer<SocketChanne
     public void initChannel(SocketChannel ch) {
         ChannelPipeline p = ch.pipeline();
         if (sslCtx != null) {
-            p.addLast(sslCtx.newHandler(ch.alloc(), WorldClockClient.HOST, WorldClockClient.PORT));
+            p.addLast(sslCtx.newHandler(ch.bufferAllocator(), WorldClockClient.HOST, WorldClockClient.PORT));
         }
 
         p.addLast(new ProtobufVarint32FrameDecoder());
