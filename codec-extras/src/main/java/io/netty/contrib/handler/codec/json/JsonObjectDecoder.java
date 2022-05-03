@@ -15,12 +15,12 @@
  */
 package io.netty.contrib.handler.codec.json;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
+import io.netty5.buffer.ByteBufUtil;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandler;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.channel.ChannelPipeline;
-import io.netty5.handler.codec.ByteToMessageDecoder;
+import io.netty5.handler.codec.ByteToMessageDecoderForBuffer;
 import io.netty5.handler.codec.CorruptedFrameException;
 import io.netty5.handler.codec.TooLongFrameException;
 
@@ -39,7 +39,7 @@ import static io.netty5.util.internal.ObjectUtil.checkPositive;
  * if it contains a matching number of opening and closing braces/brackets. It's up to a subsequent
  * {@link ChannelHandler} to parse the JSON text into a more usable form i.e. a POJO.
  */
-public class JsonObjectDecoder extends ByteToMessageDecoder {
+public class JsonObjectDecoder extends ByteToMessageDecoderForBuffer {
 
     private static final int ST_CORRUPTED = -1;
     private static final int ST_INIT = 0;
@@ -48,8 +48,8 @@ public class JsonObjectDecoder extends ByteToMessageDecoder {
     private final int maxObjectLength;
     private final boolean streamArrayElements;
     private int openBraces;
-    private int idx;
-    private int lastReaderIndex;
+    private int idx; // current scan position
+    private int lastReaderOffset;
     private int state;
     private boolean insideString;
 
@@ -80,29 +80,29 @@ public class JsonObjectDecoder extends ByteToMessageDecoder {
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, Buffer in) throws Exception {
         if (state == ST_CORRUPTED) {
-            in.skipBytes(in.readableBytes());
+            in.skipReadable(in.readableBytes());
             return;
         }
 
-        if (idx > in.readerIndex() && lastReaderIndex != in.readerIndex()) {
-            idx = in.readerIndex() + idx - lastReaderIndex;
+        if (idx > in.readerOffset() && lastReaderOffset != in.readerOffset()) {
+            idx = in.readerOffset() + idx - lastReaderOffset;
         }
 
         // index of next byte to process.
         int idx = this.idx;
-        int wrtIdx = in.writerIndex();
+        int wrtOffset = in.writerOffset();
 
-        if (wrtIdx > maxObjectLength) {
+        if (wrtOffset > maxObjectLength) {
             // buffer size exceeded maxObjectLength; discarding the complete buffer.
-            in.skipBytes(in.readableBytes());
+            in.skipReadable(in.readableBytes());
             reset();
             throw new TooLongFrameException(
-                    "object length exceeds " + maxObjectLength + ": " + wrtIdx + " bytes discarded");
+                    "object length exceeds " + maxObjectLength + ": " + wrtOffset + " bytes discarded");
         }
 
-        for (/* use current idx */; idx < wrtIdx; idx++) {
+        for (/* use current idx */; idx < wrtOffset; idx++) {
             byte c = in.getByte(idx);
             if (state == ST_DECODING_NORMAL) {
                 decodeByte(c, in, idx);
@@ -110,14 +110,24 @@ public class JsonObjectDecoder extends ByteToMessageDecoder {
                 // All opening braces/brackets have been closed. That's enough to conclude
                 // that the JSON object/array is complete.
                 if (openBraces == 0) {
-                    ByteBuf json = extractObject(ctx, in, in.readerIndex(), idx + 1 - in.readerIndex());
+                    Buffer json = extractObject(ctx, in, in.readerOffset(), idx + 1 - in.readerOffset());
                     if (json != null) {
                         ctx.fireChannelRead(json);
                     }
 
-                    // The JSON object/array was extracted => discard the bytes from
-                    // the input buffer.
-                    in.readerIndex(idx + 1);
+                    int newWrtOffset = in.writerOffset();
+                    if (wrtOffset > newWrtOffset) {
+                        // The JSON object/array was extracted using split or readSplit ==>
+                        // reset current scan index so next iteration will correspond to first position.
+                        // Also reset input buffer writer offset.
+                        idx = -1;
+                        wrtOffset = newWrtOffset;
+                    } else {
+                        // The JSON object/array was extracted not using split/readSplit ==>
+                        // discard the bytes from the input buffer.
+                        in.readerOffset(idx + 1);
+                    }
+
                     // Reset the object state to get ready for the next JSON object/text
                     // coming along the byte stream.
                     reset();
@@ -128,22 +138,33 @@ public class JsonObjectDecoder extends ByteToMessageDecoder {
                 if (!insideString && (openBraces == 1 && c == ',' || openBraces == 0 && c == ']')) {
                     // skip leading spaces. No range check is needed and the loop will terminate
                     // because the byte at position idx is not a whitespace.
-                    for (int i = in.readerIndex(); Character.isWhitespace(in.getByte(i)); i++) {
-                        in.skipBytes(1);
+                    for (int i = in.readerOffset(); Character.isWhitespace(in.getByte(i)); i++) {
+                        in.skipReadable(1);
                     }
 
                     // skip trailing spaces.
                     int idxNoSpaces = idx - 1;
-                    while (idxNoSpaces >= in.readerIndex() && Character.isWhitespace(in.getByte(idxNoSpaces))) {
+                    while (idxNoSpaces >= in.readerOffset() && Character.isWhitespace(in.getByte(idxNoSpaces))) {
                         idxNoSpaces--;
                     }
 
-                    ByteBuf json = extractObject(ctx, in, in.readerIndex(), idxNoSpaces + 1 - in.readerIndex());
+                    Buffer json = extractObject(ctx, in, in.readerOffset(), idxNoSpaces + 1 - in.readerOffset());
                     if (json != null) {
                         ctx.fireChannelRead(json);
                     }
 
-                    in.readerIndex(idx + 1);
+                    int newWrtOffset = in.writerOffset();
+                    if (wrtOffset > newWrtOffset) {
+                        // The JSON object/array was extracted using split or readSplit ==>
+                        // reset current scan index accordingly, as well as the input buffer writer offset.
+                        idx = idx - idxNoSpaces - 1;
+                        in.readerOffset(idx + 1);
+                        wrtOffset = newWrtOffset;
+                    } else {
+                        // The JSON object/array was extracted not using split or readSplit ==>
+                        // discard the bytes from the input buffer.
+                        in.readerOffset(idx + 1);
+                    }
 
                     if (c == ']') {
                         reset();
@@ -155,11 +176,11 @@ public class JsonObjectDecoder extends ByteToMessageDecoder {
 
                 if (state == ST_DECODING_ARRAY_STREAM) {
                     // Discard the array bracket
-                    in.skipBytes(1);
+                    in.skipReadable(1);
                 }
                 // Discard leading spaces in front of a JSON object/array.
             } else if (Character.isWhitespace(c)) {
-                in.skipBytes(1);
+                in.skipReadable(1);
             } else {
                 state = ST_CORRUPTED;
                 throw new CorruptedFrameException(
@@ -172,18 +193,18 @@ public class JsonObjectDecoder extends ByteToMessageDecoder {
         } else {
             this.idx = idx;
         }
-        lastReaderIndex = in.readerIndex();
+        lastReaderOffset = in.readerOffset();
     }
 
     /**
      * Override this method if you want to filter the json objects/arrays that get passed through the pipeline.
      */
     @SuppressWarnings("UnusedParameters")
-    protected ByteBuf extractObject(ChannelHandlerContext ctx, ByteBuf buffer, int index, int length) {
-        return buffer.retainedSlice(index, length);
+    protected Buffer extractObject(ChannelHandlerContext ctx, Buffer buffer, int index, int length) {
+        return buffer.readSplit(length);
     }
 
-    private void decodeByte(byte c, ByteBuf in, int idx) {
+    private void decodeByte(byte c, Buffer in, int idx) {
         if ((c == '{' || c == '[') && !insideString) {
             openBraces++;
         } else if ((c == '}' || c == ']') && !insideString) {
