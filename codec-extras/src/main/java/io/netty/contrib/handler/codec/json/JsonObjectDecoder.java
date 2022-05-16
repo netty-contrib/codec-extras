@@ -15,7 +15,7 @@
  */
 package io.netty.contrib.handler.codec.json;
 
-import io.netty5.buffer.ByteBufUtil;
+import io.netty5.buffer.BufferUtil;
 import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandler;
 import io.netty5.channel.ChannelHandlerContext;
@@ -184,7 +184,7 @@ public class JsonObjectDecoder extends ByteToMessageDecoderForBuffer {
             } else {
                 state = ST_CORRUPTED;
                 throw new CorruptedFrameException(
-                        "invalid JSON received at byte position " + idx + ": " + ByteBufUtil.hexDump(in));
+                        "invalid JSON received at byte position " + idx + ": " + BufferUtil.hexDump(in));
             }
         }
 
