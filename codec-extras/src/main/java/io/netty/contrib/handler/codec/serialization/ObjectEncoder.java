@@ -16,10 +16,11 @@
 package io.netty.contrib.handler.codec.serialization;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufOutputStream;
+import io.netty5.buffer.BufferOutputStream;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandler.Sharable;
 import io.netty5.channel.ChannelHandlerContext;
-import io.netty5.handler.codec.MessageToByteEncoder;
+import io.netty5.handler.codec.MessageToByteEncoderForBuffer;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -34,14 +35,19 @@ import java.io.Serializable;
  * interoperability with this encoder.
  */
 @Sharable
-public class ObjectEncoder extends MessageToByteEncoder<Serializable> {
+public class ObjectEncoder extends MessageToByteEncoderForBuffer<Serializable> {
     private static final byte[] LENGTH_PLACEHOLDER = new byte[4];
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, Serializable msg, ByteBuf out) throws Exception {
-        int startIdx = out.writerIndex();
+    protected Buffer allocateBuffer(ChannelHandlerContext ctx, Serializable msg) throws Exception {
+        return ctx.bufferAllocator().allocate(256);
+    }
 
-        ByteBufOutputStream bout = new ByteBufOutputStream(out);
+    @Override
+    protected void encode(ChannelHandlerContext ctx, Serializable msg, Buffer out) throws Exception {
+        int startIdx = out.writerOffset();
+
+        BufferOutputStream bout = new BufferOutputStream(out);
         ObjectOutputStream oout = null;
         try {
             bout.write(LENGTH_PLACEHOLDER);
@@ -56,7 +62,7 @@ public class ObjectEncoder extends MessageToByteEncoder<Serializable> {
             }
         }
 
-        int endIdx = out.writerIndex();
+        int endIdx = out.writerOffset();
         out.setInt(startIdx, endIdx - startIdx - 4);
     }
 }
