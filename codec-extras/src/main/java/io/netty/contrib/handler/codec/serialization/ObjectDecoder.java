@@ -16,9 +16,10 @@
 package io.netty.contrib.handler.codec.serialization;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
+import io.netty5.buffer.BufferInputStream;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandlerContext;
-import io.netty5.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty5.handler.codec.LengthFieldBasedFrameDecoderForBuffer;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -33,7 +34,7 @@ import java.io.StreamCorruptedException;
  * {@link ObjectEncoder} or {@link ObjectEncoderOutputStream} to ensure the
  * interoperability with this decoder.
  */
-public class ObjectDecoder extends LengthFieldBasedFrameDecoder {
+public class ObjectDecoder extends LengthFieldBasedFrameDecoderForBuffer {
 
     private final ClassResolver classResolver;
 
@@ -65,13 +66,13 @@ public class ObjectDecoder extends LengthFieldBasedFrameDecoder {
     }
 
     @Override
-    protected Object decode0(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-        ByteBuf frame = (ByteBuf) super.decode0(ctx, in);
+    protected Object decode0(ChannelHandlerContext ctx, Buffer in) throws Exception {
+        Buffer frame = (Buffer) super.decode0(ctx, in);
         if (frame == null) {
             return null;
         }
 
-        try (ObjectInputStream ois = new CompactObjectInputStream(new ByteBufInputStream(frame, true), classResolver)) {
+        try (ObjectInputStream ois = new CompactObjectInputStream(new BufferInputStream(frame.send()), classResolver)) {
             return ois.readObject();
         }
     }
