@@ -82,7 +82,7 @@ public class JsonObjectDecoder extends ByteToMessageDecoderForBuffer {
     @Override
     protected void decode(ChannelHandlerContext ctx, Buffer in) throws Exception {
         if (state == ST_CORRUPTED) {
-            in.skipReadable(in.readableBytes());
+            in.skipReadableBytes(in.readableBytes());
             return;
         }
 
@@ -96,7 +96,7 @@ public class JsonObjectDecoder extends ByteToMessageDecoderForBuffer {
 
         if (wrtOffset > maxObjectLength) {
             // buffer size exceeded maxObjectLength; discarding the complete buffer.
-            in.skipReadable(in.readableBytes());
+            in.skipReadableBytes(in.readableBytes());
             reset();
             throw new TooLongFrameException(
                     "object length exceeds " + maxObjectLength + ": " + wrtOffset + " bytes discarded");
@@ -139,7 +139,7 @@ public class JsonObjectDecoder extends ByteToMessageDecoderForBuffer {
                     // skip leading spaces. No range check is needed and the loop will terminate
                     // because the byte at position idx is not a whitespace.
                     for (int i = in.readerOffset(); Character.isWhitespace(in.getByte(i)); i++) {
-                        in.skipReadable(1);
+                        in.skipReadableBytes(1);
                     }
 
                     // skip trailing spaces.
@@ -176,11 +176,11 @@ public class JsonObjectDecoder extends ByteToMessageDecoderForBuffer {
 
                 if (state == ST_DECODING_ARRAY_STREAM) {
                     // Discard the array bracket
-                    in.skipReadable(1);
+                    in.skipReadableBytes(1);
                 }
                 // Discard leading spaces in front of a JSON object/array.
             } else if (Character.isWhitespace(c)) {
-                in.skipReadable(1);
+                in.skipReadableBytes(1);
             } else {
                 state = ST_CORRUPTED;
                 throw new CorruptedFrameException(
