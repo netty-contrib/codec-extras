@@ -82,7 +82,7 @@ public class XmlFrameDecoder extends ByteToMessageDecoder {
     }
 
     private static void fail(ChannelHandlerContext ctx) {
-        ctx.fireExceptionCaught(new CorruptedFrameException("frame contains content before the xml starts"));
+        ctx.fireChannelExceptionCaught(new CorruptedFrameException("frame contains content before the xml starts"));
     }
 
     private static ByteBuf extractFrame(ByteBuf buffer, int index, int length) {

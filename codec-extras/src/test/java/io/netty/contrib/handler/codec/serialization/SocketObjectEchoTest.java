@@ -190,7 +190,7 @@ public class SocketObjectEchoTest extends AbstractSocketTest {
         }
 
         @Override
-        public void exceptionCaught(ChannelHandlerContext ctx,
+        public void channelExceptionCaught(ChannelHandlerContext ctx,
                 Throwable cause) throws Exception {
             if (exception.compareAndSet(null, cause)) {
                 ctx.close();
