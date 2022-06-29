@@ -16,8 +16,7 @@
 package io.netty.contrib.handler.codec.protobuf;
 
 import com.google.protobuf.nano.MessageNano;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandler.Sharable;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.channel.ChannelPipeline;
@@ -28,7 +27,7 @@ import io.netty5.handler.codec.MessageToMessageDecoder;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Decodes a received {@link ByteBuf} into a
+ * Decodes a received {@link Buffer} into a
  * <a href="https://github.com/google/protobuf">Google Protocol Buffers</a>
  * {@link MessageNano}. Please note that this decoder must
  * be used with a proper {@link ByteToMessageDecoder} such as {@link LengthFieldBasedFrameDecoder}
@@ -43,10 +42,10 @@ import static java.util.Objects.requireNonNull;
  *                  new {@link ProtobufDecoderNano}(MyMessage.getDefaultInstance()));
  *
  * // Encoder
- * pipeline.addLast("frameEncoder", new {@link io.netty.handler.codec.LengthFieldPrepender}(4));
+ * pipeline.addLast("frameEncoder", new {@link io.netty5.handler.codec.LengthFieldPrepender}(4));
  * pipeline.addLast("protobufEncoder", new {@link ProtobufEncoderNano}());
  * </pre>
- * and then you can use a {@code MyMessage} instead of a {@link ByteBuf}
+ * and then you can use a {@code MyMessage} instead of a {@link Buffer}
  * as a message:
  * <pre>
  * void channelRead({@link ChannelHandlerContext} ctx, Object msg) {
@@ -58,7 +57,7 @@ import static java.util.Objects.requireNonNull;
  * </pre>
  */
 @Sharable
-public class ProtobufDecoderNano extends MessageToMessageDecoder<ByteBuf> {
+public class ProtobufDecoderNano extends MessageToMessageDecoder<Buffer> {
     private final Class<? extends MessageNano> clazz;
 
     /**
@@ -69,17 +68,12 @@ public class ProtobufDecoderNano extends MessageToMessageDecoder<ByteBuf> {
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
-        final byte[] array;
-        final int offset;
+    protected void decode(ChannelHandlerContext ctx, Buffer msg) throws Exception {
         final int length = msg.readableBytes();
-        if (msg.hasArray()) {
-            array = msg.array();
-            offset = msg.arrayOffset() + msg.readerIndex();
-        } else {
-            array = ByteBufUtil.getBytes(msg, msg.readerIndex(), length, false);
-            offset = 0;
-        }
+        final byte[] array = new byte[length];
+        final int offset;
+        msg.copyInto(msg.readerOffset(), array, 0, length);
+        offset = 0;
         MessageNano prototype = clazz.getConstructor().newInstance();
         ctx.fireChannelRead(MessageNano.mergeFrom(prototype, array, offset, length));
     }

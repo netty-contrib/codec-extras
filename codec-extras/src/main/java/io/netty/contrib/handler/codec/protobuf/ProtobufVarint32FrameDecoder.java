@@ -17,13 +17,13 @@ package io.netty.contrib.handler.codec.protobuf;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.nano.CodedInputByteBufferNano;
-import io.netty.buffer.ByteBuf;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.handler.codec.ByteToMessageDecoder;
 import io.netty5.handler.codec.CorruptedFrameException;
 
 /**
- * A decoder that splits the received {@link ByteBuf}s dynamically by the
+ * A decoder that splits the received {@link Buffer}s dynamically by the
  * value of the Google Protocol Buffers
  * <a href="https://developers.google.com/protocol-buffers/docs/encoding#varints">Base
  * 128 Varints</a> integer length field in the message. For example:
@@ -48,42 +48,42 @@ public class ProtobufVarint32FrameDecoder extends ByteToMessageDecoder {
      *
      * @return decoded int if buffers readerIndex has been forwarded else nonsense value
      */
-    private static int readRawVarint32(ByteBuf buffer) {
-        if (!buffer.isReadable()) {
+    private static int readRawVarint32(Buffer buffer) {
+        if (buffer.readableBytes() == 0) {
             return 0;
         }
-        int readerIndex = buffer.readerIndex();
+        int readerIndex = buffer.readerOffset();
         byte tmp = buffer.readByte();
         if (tmp >= 0) {
             return tmp;
         } else {
             int result = tmp & 127;
-            if (!buffer.isReadable()) {
-                buffer.readerIndex(readerIndex);
+            if (buffer.readableBytes() == 0) {
+                buffer.readerOffset(readerIndex);
                 return 0;
             }
             if ((tmp = buffer.readByte()) >= 0) {
                 result |= tmp << 7;
             } else {
                 result |= (tmp & 127) << 7;
-                if (!buffer.isReadable()) {
-                    buffer.readerIndex(readerIndex);
+                if (buffer.readableBytes() == 0) {
+                    buffer.readerOffset(readerIndex);
                     return 0;
                 }
                 if ((tmp = buffer.readByte()) >= 0) {
                     result |= tmp << 14;
                 } else {
                     result |= (tmp & 127) << 14;
-                    if (!buffer.isReadable()) {
-                        buffer.readerIndex(readerIndex);
+                    if (buffer.readableBytes() == 0) {
+                        buffer.readerOffset(readerIndex);
                         return 0;
                     }
                     if ((tmp = buffer.readByte()) >= 0) {
                         result |= tmp << 21;
                     } else {
                         result |= (tmp & 127) << 21;
-                        if (!buffer.isReadable()) {
-                            buffer.readerIndex(readerIndex);
+                        if (buffer.readableBytes() == 0) {
+                            buffer.readerOffset(readerIndex);
                             return 0;
                         }
                         result |= (tmp = buffer.readByte()) << 28;
@@ -98,12 +98,11 @@ public class ProtobufVarint32FrameDecoder extends ByteToMessageDecoder {
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in)
-            throws Exception {
-        int readerIndex = in.readerIndex();
-        int preIndex = in.readerIndex();
+    protected void decode(ChannelHandlerContext ctx, Buffer in) {
+        int readerIndex = in.readerOffset();
+        int preIndex = in.readerOffset();
         int length = readRawVarint32(in);
-        if (preIndex == in.readerIndex()) {
+        if (preIndex == in.readerOffset()) {
             return;
         }
         if (length < 0) {
@@ -111,9 +110,9 @@ public class ProtobufVarint32FrameDecoder extends ByteToMessageDecoder {
         }
 
         if (in.readableBytes() < length) {
-            in.readerIndex(readerIndex);
+            in.readerOffset(readerIndex);
         } else {
-            ctx.fireChannelRead(in.readRetainedSlice(length));
+            ctx.fireChannelRead(in.readSplit(length));
         }
     }
 }

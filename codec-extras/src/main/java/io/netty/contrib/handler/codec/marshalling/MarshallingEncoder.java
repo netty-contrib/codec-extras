@@ -15,7 +15,7 @@
  */
 package io.netty.contrib.handler.codec.marshalling;
 
-import io.netty.buffer.ByteBuf;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandler.Sharable;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.handler.codec.MessageToByteEncoder;
@@ -23,7 +23,7 @@ import org.jboss.marshalling.Marshaller;
 
 /**
  * {@link MessageToByteEncoder} implementation which uses JBoss Marshalling to marshal
- * an Object. Be aware that this encoder is not compatible with an other client that just use
+ * an Object. Be aware that this encoder is not compatible with another client that just use
  * JBoss Marshalling as it includes the size of every {@link Object} that gets serialized in
  * front of the {@link Object} itself.
  * <p>
@@ -48,9 +48,14 @@ public class MarshallingEncoder extends MessageToByteEncoder<Object> {
     }
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
+    protected Buffer allocateBuffer(ChannelHandlerContext ctx, Object o) {
+        return ctx.bufferAllocator().allocate(256);
+    }
+
+    @Override
+    protected void encode(ChannelHandlerContext ctx, Object msg, Buffer out) throws Exception {
         Marshaller marshaller = provider.getMarshaller(ctx);
-        int lengthPos = out.writerIndex();
+        int lengthPos = out.writerOffset();
         out.writeBytes(LENGTH_PLACEHOLDER);
         ChannelBufferByteOutput output = new ChannelBufferByteOutput(out);
         marshaller.start(output);
@@ -58,6 +63,6 @@ public class MarshallingEncoder extends MessageToByteEncoder<Object> {
         marshaller.finish();
         marshaller.close();
 
-        out.setInt(lengthPos, out.writerIndex() - lengthPos - 4);
+        out.setInt(lengthPos, out.writerOffset() - lengthPos - 4);
     }
 }

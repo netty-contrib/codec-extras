@@ -15,12 +15,11 @@
  */
 package io.netty.contrib.handler.codec.protobuf;
 
-import io.netty.buffer.ByteBuf;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.embedded.EmbeddedChannel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static io.netty.buffer.Unpooled.wrappedBuffer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -45,16 +44,14 @@ public class ProtobufVarint32LengthFieldPrependerTest {
         for (int i = size; i < num + size; ++i) {
             buf[i] = 1;
         }
-        assertTrue(ch.writeOutbound(wrappedBuffer(buf, size, buf.length - size)));
+        Buffer buffer = ch.bufferAllocator().allocate(buf.length - size);
+        assertTrue(ch.writeOutbound(buffer.writeBytes(buf, size, buf.length - size)));
 
-        ByteBuf expected = wrappedBuffer(buf);
-        ByteBuf actual = ch.readOutbound();
-
-        assertThat(expected).isEqualTo(actual);
+        try (Buffer expected = ch.bufferAllocator().copyOf(buf);
+             Buffer actual = ch.readOutbound()) {
+            assertThat(expected).isEqualTo(actual);
+        }
         assertFalse(ch.finish());
-
-        expected.release();
-        actual.release();
     }
 
     @Test
@@ -80,16 +77,14 @@ public class ProtobufVarint32LengthFieldPrependerTest {
         for (int i = size; i < num + size; ++i) {
             buf[i] = 1;
         }
-        assertTrue(ch.writeOutbound(wrappedBuffer(buf, size, buf.length - size)));
+        Buffer buffer = ch.bufferAllocator().allocate(buf.length - size);
+        assertTrue(ch.writeOutbound(buffer.writeBytes(buf, size, buf.length - size)));
 
-        ByteBuf expected = wrappedBuffer(buf);
-        ByteBuf actual = ch.readOutbound();
-
-        assertThat(actual).isEqualTo(expected);
+        try (Buffer expected = ch.bufferAllocator().copyOf(buf);
+        Buffer actual = ch.readOutbound()) {
+            assertThat(actual).isEqualTo(expected);
+        }
         assertFalse(ch.finish());
-
-        expected.release();
-        actual.release();
     }
 
     @Test
@@ -116,16 +111,14 @@ public class ProtobufVarint32LengthFieldPrependerTest {
         for (int i = size; i < num + size; ++i) {
             buf[i] = 1;
         }
-        assertTrue(ch.writeOutbound(wrappedBuffer(buf, size, buf.length - size)));
+        Buffer buffer = ch.bufferAllocator().allocate(buf.length - size);
+        assertTrue(ch.writeOutbound(buffer.writeBytes(buf, size, buf.length - size)));
 
-        ByteBuf expected = wrappedBuffer(buf);
-        ByteBuf actual = ch.readOutbound();
-
-        assertThat(expected).isEqualTo(actual);
+        try (Buffer expected = ch.bufferAllocator().copyOf(buf);
+        Buffer actual = ch.readOutbound()) {
+            assertThat(expected).isEqualTo(actual);
+        }
         assertFalse(ch.finish());
-
-        expected.release();
-        actual.release();
     }
 
     @Test
@@ -153,31 +146,27 @@ public class ProtobufVarint32LengthFieldPrependerTest {
         for (int i = size; i < num + size; ++i) {
             buf[i] = 1;
         }
-        assertTrue(ch.writeOutbound(wrappedBuffer(buf, size, buf.length - size)));
+        Buffer buffer = ch.bufferAllocator().allocate(buf.length - size);
+        assertTrue(ch.writeOutbound(buffer.writeBytes(buf, size, buf.length - size)));
 
-        ByteBuf expected = wrappedBuffer(buf);
-        ByteBuf actual = ch.readOutbound();
-
-        assertThat(actual).isEqualTo(expected);
+        try (Buffer expected = ch.bufferAllocator().copyOf(buf);
+        Buffer actual = ch.readOutbound()) {
+            assertThat(actual).isEqualTo(expected);
+        }
         assertFalse(ch.finish());
-
-        expected.release();
-        actual.release();
     }
 
     @Test
     public void testTinyEncode() {
         byte[] b = {4, 1, 1, 1, 1};
-        assertTrue(ch.writeOutbound(wrappedBuffer(b, 1, b.length - 1)));
+        Buffer buffer = ch.bufferAllocator().allocate(b.length - 1);
+        assertTrue(ch.writeOutbound(buffer.writeBytes(b, 1, b.length - 1)));
 
-        ByteBuf expected = wrappedBuffer(b);
-        ByteBuf actual = ch.readOutbound();
-
-        assertThat(actual).isEqualTo(expected);
+        try (Buffer expected = ch.bufferAllocator().copyOf(b);
+        Buffer actual = ch.readOutbound()) {
+            assertThat(actual).isEqualTo(expected);
+        }
         assertFalse(ch.finish());
-
-        expected.release();
-        actual.release();
     }
 
     @Test
@@ -188,15 +177,13 @@ public class ProtobufVarint32LengthFieldPrependerTest {
         }
         b[0] = -2;
         b[1] = 15;
-        assertTrue(ch.writeOutbound(wrappedBuffer(b, 2, b.length - 2)));
+        Buffer buffer = ch.bufferAllocator().allocate(b.length - 2);
+        assertTrue(ch.writeOutbound(buffer.writeBytes(b, 2, b.length - 2)));
 
-        ByteBuf expected = wrappedBuffer(b);
-        ByteBuf actual = ch.readOutbound();
-
-        assertThat(actual).isEqualTo(expected);
+        try (Buffer expected = ch.bufferAllocator().copyOf(b);
+        Buffer actual = ch.readOutbound()) {
+            assertThat(actual).isEqualTo(expected);
+        }
         assertFalse(ch.finish());
-
-        expected.release();
-        actual.release();
     }
 }

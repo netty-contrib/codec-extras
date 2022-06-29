@@ -15,19 +15,18 @@
  */
 package io.netty.contrib.handler.codec.serialization;
 
-import io.netty.buffer.ByteBuf;
 import io.netty5.buffer.BufferOutputStream;
 import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandler.Sharable;
 import io.netty5.channel.ChannelHandlerContext;
-import io.netty5.handler.codec.MessageToByteEncoderForBuffer;
+import io.netty5.handler.codec.MessageToByteEncoder;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
- * An encoder which serializes a Java object into a {@link ByteBuf}.
+ * An encoder which serializes a Java object into a {@link Buffer}.
  * <p>
  * Please note that the serialized form this encoder produces is not
  * compatible with the standard {@link ObjectInputStream}.  Please use
@@ -35,11 +34,11 @@ import java.io.Serializable;
  * interoperability with this encoder.
  */
 @Sharable
-public class ObjectEncoder extends MessageToByteEncoderForBuffer<Serializable> {
+public class ObjectEncoder extends MessageToByteEncoder<Serializable> {
     private static final byte[] LENGTH_PLACEHOLDER = new byte[4];
 
     @Override
-    protected Buffer allocateBuffer(ChannelHandlerContext ctx, Serializable msg) throws Exception {
+    protected Buffer allocateBuffer(ChannelHandlerContext ctx, Serializable msg) {
         return ctx.bufferAllocator().allocate(256);
     }
 

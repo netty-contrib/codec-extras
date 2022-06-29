@@ -15,18 +15,17 @@
  */
 package io.netty.contrib.handler.codec.serialization;
 
-import io.netty.buffer.ByteBuf;
 import io.netty5.buffer.BufferInputStream;
 import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandlerContext;
-import io.netty5.handler.codec.LengthFieldBasedFrameDecoderForBuffer;
+import io.netty5.handler.codec.LengthFieldBasedFrameDecoder;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 
 /**
- * A decoder which deserializes the received {@link ByteBuf}s into Java
+ * A decoder which deserializes the received {@link Buffer}s into Java
  * objects.
  * <p>
  * Please note that the serialized form this decoder expects is not
@@ -34,7 +33,7 @@ import java.io.StreamCorruptedException;
  * {@link ObjectEncoder} or {@link ObjectEncoderOutputStream} to ensure the
  * interoperability with this decoder.
  */
-public class ObjectDecoder extends LengthFieldBasedFrameDecoderForBuffer {
+public class ObjectDecoder extends LengthFieldBasedFrameDecoder {
 
     private final ClassResolver classResolver;
 

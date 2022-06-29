@@ -17,7 +17,7 @@ package io.netty.contrib.handler.codec.protobuf;
 
 import com.google.protobuf.nano.CodedOutputByteBufferNano;
 import com.google.protobuf.nano.MessageNano;
-import io.netty.buffer.ByteBuf;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandler;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.channel.ChannelPipeline;
@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Encodes the requested <a href="https://github.com/google/protobuf">Google
  * Protocol Buffers</a> {@link MessageNano} into a
- * {@link ByteBuf}. A typical setup for TCP/IP would be:
+ * {@link Buffer}. A typical setup for TCP/IP would be:
  * <pre>
  * {@link ChannelPipeline} pipeline = ...;
  *
@@ -44,7 +44,7 @@ import java.util.List;
  * pipeline.addLast("frameEncoder", new {@link LengthFieldPrepender}(4));
  * pipeline.addLast("protobufEncoder", new {@link ProtobufEncoderNano}());
  * </pre>
- * and then you can use a {@code MyMessage} instead of a {@link ByteBuf}
+ * and then you can use a {@code MyMessage} instead of a {@link Buffer}
  * as a message:
  * <pre>
  * void channelRead({@link ChannelHandlerContext} ctx, Object msg) {
@@ -58,15 +58,11 @@ import java.util.List;
 @ChannelHandler.Sharable
 public class ProtobufEncoderNano extends MessageToMessageEncoder<MessageNano> {
     @Override
-    protected void encode(
-            ChannelHandlerContext ctx, MessageNano msg, List<Object> out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, MessageNano msg, List<Object> out) throws Exception {
         final int size = msg.getSerializedSize();
-        final ByteBuf buffer = ctx.alloc().heapBuffer(size, size);
-        final byte[] array = buffer.array();
-        CodedOutputByteBufferNano cobbn = CodedOutputByteBufferNano.newInstance(array,
-                buffer.arrayOffset(), buffer.capacity());
+        byte[] array = new byte[size];
+        CodedOutputByteBufferNano cobbn = CodedOutputByteBufferNano.newInstance(array, 0, size);
         msg.writeTo(cobbn);
-        buffer.writerIndex(size);
-        out.add(buffer);
+        out.add(ctx.bufferAllocator().copyOf(array));
     }
 }
