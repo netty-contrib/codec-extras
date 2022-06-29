@@ -19,7 +19,6 @@ import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
 import io.netty5.buffer.api.Buffer;
-import io.netty5.channel.ChannelHandler.Sharable;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.channel.ChannelPipeline;
 import io.netty5.handler.codec.LengthFieldBasedFrameDecoder;
@@ -56,7 +55,6 @@ import java.util.List;
  * }
  * </pre>
  */
-@Sharable
 public class ProtobufEncoder extends MessageToMessageEncoder<MessageLiteOrBuilder> {
     @Override
     protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg, List<Object> out) {
@@ -67,5 +65,10 @@ public class ProtobufEncoder extends MessageToMessageEncoder<MessageLiteOrBuilde
         if (msg instanceof MessageLite.Builder) {
             out.add(ctx.bufferAllocator().copyOf(((MessageLite.Builder) msg).build().toByteArray()));
         }
+    }
+
+    @Override
+    public boolean isSharable() {
+        return true;
     }
 }

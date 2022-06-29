@@ -18,7 +18,6 @@ package io.netty.contrib.handler.codec.protobuf;
 import com.google.protobuf.CodedOutputStream;
 import com.google.protobuf.nano.CodedOutputByteBufferNano;
 import io.netty5.buffer.api.Buffer;
-import io.netty5.channel.ChannelHandler.Sharable;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.handler.codec.MessageToByteEncoder;
 
@@ -37,7 +36,6 @@ import io.netty5.handler.codec.MessageToByteEncoder;
  * @see CodedOutputStream
  * @see CodedOutputByteBufferNano
  */
-@Sharable
 public class ProtobufVarint32LengthFieldPrepender extends MessageToByteEncoder<Buffer> {
 
     /**
@@ -92,5 +90,10 @@ public class ProtobufVarint32LengthFieldPrepender extends MessageToByteEncoder<B
         out.ensureWritable(headerLen + bodyLen);
         writeRawVarint32(out, bodyLen);
         out.writeBytes(msg);
+    }
+
+    @Override
+    public boolean isSharable() {
+        return true;
     }
 }

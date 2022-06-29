@@ -16,7 +16,6 @@
 package io.netty.contrib.handler.codec.marshalling;
 
 import io.netty5.buffer.api.Buffer;
-import io.netty5.channel.ChannelHandler.Sharable;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.handler.codec.MessageToByteEncoder;
 import org.jboss.marshalling.Marshaller;
@@ -32,7 +31,6 @@ import org.jboss.marshalling.Marshaller;
  * See <a href="https://www.jboss.org/jbossmarshalling">JBoss Marshalling website</a>
  * for more information
  */
-@Sharable
 public class MarshallingEncoder extends MessageToByteEncoder<Object> {
 
     private static final byte[] LENGTH_PLACEHOLDER = new byte[4];
@@ -64,5 +62,10 @@ public class MarshallingEncoder extends MessageToByteEncoder<Object> {
         marshaller.close();
 
         out.setInt(lengthPos, out.writerOffset() - lengthPos - 4);
+    }
+
+    @Override
+    public boolean isSharable() {
+        return true;
     }
 }

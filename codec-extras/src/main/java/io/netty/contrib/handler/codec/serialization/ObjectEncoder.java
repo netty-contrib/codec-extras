@@ -17,7 +17,6 @@ package io.netty.contrib.handler.codec.serialization;
 
 import io.netty5.buffer.BufferOutputStream;
 import io.netty5.buffer.api.Buffer;
-import io.netty5.channel.ChannelHandler.Sharable;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.handler.codec.MessageToByteEncoder;
 
@@ -33,7 +32,6 @@ import java.io.Serializable;
  * {@link ObjectDecoder} or {@link ObjectDecoderInputStream} to ensure the
  * interoperability with this encoder.
  */
-@Sharable
 public class ObjectEncoder extends MessageToByteEncoder<Serializable> {
     private static final byte[] LENGTH_PLACEHOLDER = new byte[4];
 
@@ -63,5 +61,10 @@ public class ObjectEncoder extends MessageToByteEncoder<Serializable> {
 
         int endIdx = out.writerOffset();
         out.setInt(startIdx, endIdx - startIdx - 4);
+    }
+
+    @Override
+    public boolean isSharable() {
+        return true;
     }
 }

@@ -20,7 +20,6 @@ import com.google.protobuf.ExtensionRegistryLite;
 import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
 import io.netty5.buffer.api.Buffer;
-import io.netty5.channel.ChannelHandler.Sharable;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.channel.ChannelPipeline;
 import io.netty5.handler.codec.ByteToMessageDecoder;
@@ -61,7 +60,6 @@ import static java.util.Objects.requireNonNull;
  * }
  * </pre>
  */
-@Sharable
 public class ProtobufDecoder extends MessageToMessageDecoder<Buffer> {
 
     private static final boolean HAS_PARSER;
@@ -122,5 +120,10 @@ public class ProtobufDecoder extends MessageToMessageDecoder<Buffer> {
                         array, offset, length, extensionRegistry).build());
             }
         }
+    }
+
+    @Override
+    public boolean isSharable() {
+        return true;
     }
 }

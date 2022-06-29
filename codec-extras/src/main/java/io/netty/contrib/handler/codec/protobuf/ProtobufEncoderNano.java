@@ -18,7 +18,6 @@ package io.netty.contrib.handler.codec.protobuf;
 import com.google.protobuf.nano.CodedOutputByteBufferNano;
 import com.google.protobuf.nano.MessageNano;
 import io.netty5.buffer.api.Buffer;
-import io.netty5.channel.ChannelHandler;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.channel.ChannelPipeline;
 import io.netty5.handler.codec.LengthFieldBasedFrameDecoder;
@@ -55,7 +54,6 @@ import java.util.List;
  * }
  * </pre>
  */
-@ChannelHandler.Sharable
 public class ProtobufEncoderNano extends MessageToMessageEncoder<MessageNano> {
     @Override
     protected void encode(ChannelHandlerContext ctx, MessageNano msg, List<Object> out) throws Exception {
@@ -64,5 +62,10 @@ public class ProtobufEncoderNano extends MessageToMessageEncoder<MessageNano> {
         CodedOutputByteBufferNano cobbn = CodedOutputByteBufferNano.newInstance(array, 0, size);
         msg.writeTo(cobbn);
         out.add(ctx.bufferAllocator().copyOf(array));
+    }
+
+    @Override
+    public boolean isSharable() {
+        return true;
     }
 }

@@ -17,7 +17,6 @@ package io.netty.contrib.handler.codec.protobuf;
 
 import com.google.protobuf.nano.MessageNano;
 import io.netty5.buffer.api.Buffer;
-import io.netty5.channel.ChannelHandler.Sharable;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.channel.ChannelPipeline;
 import io.netty5.handler.codec.ByteToMessageDecoder;
@@ -56,7 +55,6 @@ import static java.util.Objects.requireNonNull;
  * }
  * </pre>
  */
-@Sharable
 public class ProtobufDecoderNano extends MessageToMessageDecoder<Buffer> {
     private final Class<? extends MessageNano> clazz;
 
@@ -76,5 +74,10 @@ public class ProtobufDecoderNano extends MessageToMessageDecoder<Buffer> {
         offset = 0;
         MessageNano prototype = clazz.getConstructor().newInstance();
         ctx.fireChannelRead(MessageNano.mergeFrom(prototype, array, offset, length));
+    }
+
+    @Override
+    public boolean isSharable() {
+        return true;
     }
 }
