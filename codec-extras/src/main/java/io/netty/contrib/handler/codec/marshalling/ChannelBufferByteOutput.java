@@ -15,22 +15,22 @@
  */
 package io.netty.contrib.handler.codec.marshalling;
 
-import io.netty.buffer.ByteBuf;
+import io.netty5.buffer.api.Buffer;
 import org.jboss.marshalling.ByteOutput;
 
 import java.io.IOException;
 
 /**
- * {@link ByteOutput} implementation which writes the data to a {@link ByteBuf}
+ * {@link ByteOutput} implementation which writes the data to a {@link Buffer}
  */
 class ChannelBufferByteOutput implements ByteOutput {
 
-    private final ByteBuf buffer;
+    private final Buffer buffer;
 
     /**
-     * Create a new instance which use the given {@link ByteBuf}
+     * Create a new instance which use the given {@link Buffer}
      */
-    ChannelBufferByteOutput(ByteBuf buffer) {
+    ChannelBufferByteOutput(Buffer buffer) {
         this.buffer = buffer;
     }
 
@@ -40,13 +40,13 @@ class ChannelBufferByteOutput implements ByteOutput {
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush() {
         // nothing to do
     }
 
     @Override
     public void write(int b) throws IOException {
-        buffer.writeByte(b);
+        buffer.writeByte((byte) b);
     }
 
     @Override
@@ -60,9 +60,9 @@ class ChannelBufferByteOutput implements ByteOutput {
     }
 
     /**
-     * Return the {@link ByteBuf} which contains the written content
+     * Return the {@link Buffer} which contains the written content
      */
-    ByteBuf getBuffer() {
+    Buffer getBuffer() {
         return buffer;
     }
 }

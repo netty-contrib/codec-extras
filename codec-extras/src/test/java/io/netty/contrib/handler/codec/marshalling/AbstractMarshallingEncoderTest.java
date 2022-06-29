@@ -15,7 +15,7 @@
  */
 package io.netty.contrib.handler.codec.marshalling;
 
-import io.netty.buffer.ByteBuf;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandler;
 import io.netty5.channel.embedded.EmbeddedChannel;
 import org.jboss.marshalling.MarshallerFactory;
@@ -23,6 +23,8 @@ import org.jboss.marshalling.Marshalling;
 import org.jboss.marshalling.MarshallingConfiguration;
 import org.jboss.marshalling.Unmarshaller;
 import org.junit.jupiter.api.Test;
+
+import java.nio.ByteBuffer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -43,24 +45,30 @@ public abstract class AbstractMarshallingEncoderTest extends AbstractMarshalling
         ch.writeOutbound(testObject);
         assertTrue(ch.finish());
 
-        ByteBuf buffer = ch.readOutbound();
+        try (Buffer buffer = ch.readOutbound()) {
 
-        Unmarshaller unmarshaller = marshallerFactory.createUnmarshaller(configuration);
-        unmarshaller.start(Marshalling.createByteInput(truncate(buffer).nioBuffer()));
-        String read = (String) unmarshaller.readObject();
-        assertEquals(testObject, read);
+            Unmarshaller unmarshaller = marshallerFactory.createUnmarshaller(configuration);
+            try (Buffer truncatedBuffer = truncate(buffer)) {
+                int readableBytes = truncatedBuffer.readableBytes();
+                ByteBuffer copy = truncatedBuffer.isDirect() ? ByteBuffer.allocateDirect(readableBytes) :
+                        ByteBuffer.allocate(readableBytes);
+                truncatedBuffer.copyInto(truncatedBuffer.readerOffset(), copy, 0, readableBytes);
+                unmarshaller.start(Marshalling.createByteInput(copy));
+                String read = (String) unmarshaller.readObject();
+                assertEquals(testObject, read);
 
-        assertEquals(-1, unmarshaller.read());
+                assertEquals(-1, unmarshaller.read());
+            }
 
-        assertNull(ch.readOutbound());
+            assertNull(ch.readOutbound());
 
-        unmarshaller.finish();
-        unmarshaller.close();
-        buffer.release();
+            unmarshaller.finish();
+            unmarshaller.close();
+        }
     }
 
-    protected ByteBuf truncate(ByteBuf buf) {
-        return buf;
+    protected Buffer truncate(Buffer buf) {
+        return buf.split();
     }
 
     protected ChannelHandler createEncoder() {

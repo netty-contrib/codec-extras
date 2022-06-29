@@ -15,8 +15,8 @@
  */
 package io.netty.contrib.handler.codec.serialization;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
+import io.netty5.buffer.BufferInputStream;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.embedded.EmbeddedChannel;
 import org.junit.jupiter.api.Test;
 
@@ -31,14 +31,9 @@ public class CompatibleObjectEncoderTest {
     private static void testEncode(EmbeddedChannel channel, TestSerializable original)
             throws IOException, ClassNotFoundException {
         channel.writeOutbound(original);
-        Object o = channel.readOutbound();
-        ByteBuf buf = (ByteBuf) o;
-        ObjectInputStream ois = new ObjectInputStream(new ByteBufInputStream(buf));
-        try {
+        try (Buffer buf = channel.readOutbound();
+             ObjectInputStream ois = new ObjectInputStream(new BufferInputStream(buf.send()))) {
             assertEquals(original, ois.readObject());
-        } finally {
-            buf.release();
-            ois.close();
         }
     }
 

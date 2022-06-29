@@ -15,8 +15,7 @@
  */
 package io.netty.contrib.handler.codec.marshalling;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandler;
 import io.netty5.channel.embedded.EmbeddedChannel;
 import org.jboss.marshalling.Marshaller;
@@ -28,6 +27,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import static io.netty5.buffer.api.DefaultBufferAllocators.preferredAllocator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -63,8 +63,8 @@ public abstract class AbstractMarshallingDecoderTest extends AbstractMarshalling
         assertNull(ch.readInbound());
     }
 
-    protected ByteBuf input(byte[] input) {
-        return Unpooled.wrappedBuffer(input);
+    protected Buffer input(byte[] input) {
+        return preferredAllocator().copyOf(input);
     }
 
     @Test
@@ -83,8 +83,8 @@ public abstract class AbstractMarshallingDecoderTest extends AbstractMarshalling
 
         byte[] testBytes = bout.toByteArray();
 
-        ByteBuf buffer = input(testBytes);
-        ByteBuf slice = buffer.readRetainedSlice(2);
+        Buffer buffer = input(testBytes);
+        Buffer slice = buffer.readSplit(2);
 
         ch.writeInbound(slice);
         ch.writeInbound(buffer);
@@ -116,7 +116,7 @@ public abstract class AbstractMarshallingDecoderTest extends AbstractMarshalling
         onTooBigFrame(ch, input(testBytes));
     }
 
-    protected void onTooBigFrame(EmbeddedChannel ch, ByteBuf input) {
+    protected void onTooBigFrame(EmbeddedChannel ch, Buffer input) {
         ch.writeInbound(input);
         assertFalse(ch.isActive());
     }

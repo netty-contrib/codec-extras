@@ -15,19 +15,19 @@
  */
 package io.netty.contrib.handler.codec.marshalling;
 
-import io.netty.buffer.ByteBuf;
+import io.netty5.buffer.api.Buffer;
 import org.jboss.marshalling.ByteInput;
 
 import java.io.IOException;
 
 /**
- * {@link ByteInput} implementation which reads its data from a {@link ByteBuf}
+ * {@link ByteInput} implementation which reads its data from a {@link Buffer}
  */
 class ChannelBufferByteInput implements ByteInput {
 
-    private final ByteBuf buffer;
+    private final Buffer buffer;
 
-    ChannelBufferByteInput(ByteBuf buffer) {
+    ChannelBufferByteInput(Buffer buffer) {
         this.buffer = buffer;
     }
 
@@ -37,25 +37,25 @@ class ChannelBufferByteInput implements ByteInput {
     }
 
     @Override
-    public int available() throws IOException {
+    public int available() {
         return buffer.readableBytes();
     }
 
     @Override
-    public int read() throws IOException {
-        if (buffer.isReadable()) {
+    public int read() {
+        if (buffer.readableBytes() > 0) {
             return buffer.readByte() & 0xff;
         }
         return -1;
     }
 
     @Override
-    public int read(byte[] array) throws IOException {
+    public int read(byte[] array) {
         return read(array, 0, array.length);
     }
 
     @Override
-    public int read(byte[] dst, int dstIndex, int length) throws IOException {
+    public int read(byte[] dst, int dstIndex, int length) {
         int available = available();
         if (available == 0) {
             return -1;
@@ -67,12 +67,12 @@ class ChannelBufferByteInput implements ByteInput {
     }
 
     @Override
-    public long skip(long bytes) throws IOException {
+    public long skip(long bytes) {
         int readable = buffer.readableBytes();
         if (readable < bytes) {
             bytes = readable;
         }
-        buffer.readerIndex((int) (buffer.readerIndex() + bytes));
+        buffer.readerOffset((int) (buffer.readerOffset() + bytes));
         return bytes;
     }
 

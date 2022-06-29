@@ -15,7 +15,7 @@
  */
 package io.netty.contrib.handler.codec.xml;
 
-import io.netty.buffer.ByteBuf;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.handler.codec.ByteToMessageDecoder;
 import io.netty5.handler.codec.CorruptedFrameException;
@@ -85,7 +85,7 @@ public class XmlFrameDecoder extends ByteToMessageDecoder {
         ctx.fireChannelExceptionCaught(new CorruptedFrameException("frame contains content before the xml starts"));
     }
 
-    private static ByteBuf extractFrame(ByteBuf buffer, int index, int length) {
+    private static Buffer extractFrame(Buffer buffer, int index, int length) {
         return buffer.copy(index, length);
     }
 
@@ -104,14 +104,14 @@ public class XmlFrameDecoder extends ByteToMessageDecoder {
         return b >= 'a' && b <= 'z' || b >= 'A' && b <= 'Z' || b == ':' || b == '_';
     }
 
-    private static boolean isCommentBlockStart(final ByteBuf in, final int i) {
-        return i < in.writerIndex() - 3
+    private static boolean isCommentBlockStart(final Buffer in, final int i) {
+        return i < in.writerOffset() - 3
                 && in.getByte(i + 2) == '-'
                 && in.getByte(i + 3) == '-';
     }
 
-    private static boolean isCDATABlockStart(final ByteBuf in, final int i) {
-        return i < in.writerIndex() - 8
+    private static boolean isCDATABlockStart(final Buffer in, final int i) {
+        return i < in.writerOffset() - 8
                 && in.getByte(i + 2) == '['
                 && in.getByte(i + 3) == 'C'
                 && in.getByte(i + 4) == 'D'
@@ -122,23 +122,23 @@ public class XmlFrameDecoder extends ByteToMessageDecoder {
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, Buffer in) {
         boolean openingBracketFound = false;
         boolean atLeastOneXmlElementFound = false;
         boolean inCDATASection = false;
         long openBracketsCount = 0;
         int length = 0;
         int leadingWhiteSpaceCount = 0;
-        final int bufferLength = in.writerIndex();
+        final int bufferLength = in.writerOffset();
 
         if (bufferLength > maxFrameLength) {
             // bufferLength exceeded maxFrameLength; dropping frame
-            in.skipBytes(in.readableBytes());
+            in.skipReadableBytes(in.readableBytes());
             fail(bufferLength);
             return;
         }
 
-        for (int i = in.readerIndex(); i < bufferLength; i++) {
+        for (int i = in.readerOffset(); i < bufferLength; i++) {
             final byte readByte = in.getByte(i);
             if (!openingBracketFound && Character.isWhitespace(readByte)) {
                 // xml has not started and whitespace char found
@@ -146,7 +146,7 @@ public class XmlFrameDecoder extends ByteToMessageDecoder {
             } else if (!openingBracketFound && readByte != '<') {
                 // garbage found before xml start
                 fail(ctx);
-                in.skipBytes(in.readableBytes());
+                in.skipReadableBytes(in.readableBytes());
                 return;
             } else if (!inCDATASection && readByte == '<') {
                 openingBracketFound = true;
@@ -216,16 +216,16 @@ public class XmlFrameDecoder extends ByteToMessageDecoder {
             }
         }
 
-        final int readerIndex = in.readerIndex();
+        final int readerIndex = in.readerOffset();
         int xmlElementLength = length - readerIndex;
 
         if (openBracketsCount == 0 && xmlElementLength > 0) {
             if (readerIndex + xmlElementLength >= bufferLength) {
                 xmlElementLength = in.readableBytes();
             }
-            final ByteBuf frame =
+            final Buffer frame =
                     extractFrame(in, readerIndex + leadingWhiteSpaceCount, xmlElementLength - leadingWhiteSpaceCount);
-            in.skipBytes(xmlElementLength);
+            in.skipReadableBytes(xmlElementLength);
             ctx.fireChannelRead(frame);
         }
     }

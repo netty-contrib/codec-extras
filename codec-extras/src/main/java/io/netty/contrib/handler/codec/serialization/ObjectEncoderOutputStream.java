@@ -15,9 +15,8 @@
  */
 package io.netty.contrib.handler.codec.serialization;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.Unpooled;
+import io.netty5.buffer.BufferOutputStream;
+import io.netty5.buffer.api.Buffer;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -25,6 +24,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
+import static io.netty5.buffer.api.DefaultBufferAllocators.preferredAllocator;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -76,18 +76,17 @@ public class ObjectEncoderOutputStream extends OutputStream implements
 
     @Override
     public void writeObject(Object obj) throws IOException {
-        ByteBuf buf = Unpooled.buffer(estimatedLength);
-        try {
-            try (ObjectOutputStream oout = new CompactObjectOutputStream(new ByteBufOutputStream(buf))) {
+        try (Buffer buf = preferredAllocator().allocate(estimatedLength)) {
+            try (ObjectOutputStream oout = new CompactObjectOutputStream(new BufferOutputStream(buf))) {
                 oout.writeObject(obj);
                 oout.flush();
             }
 
             int objectSize = buf.readableBytes();
             writeInt(objectSize);
-            buf.getBytes(0, this, objectSize);
-        } finally {
-            buf.release();
+            for (int i = 0; i < objectSize; i++) {
+                out.write(buf.getByte(i));
+            }
         }
     }
 

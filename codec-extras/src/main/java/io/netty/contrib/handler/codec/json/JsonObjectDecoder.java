@@ -20,7 +20,7 @@ import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandler;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.channel.ChannelPipeline;
-import io.netty5.handler.codec.ByteToMessageDecoderForBuffer;
+import io.netty5.handler.codec.ByteToMessageDecoder;
 import io.netty5.handler.codec.CorruptedFrameException;
 import io.netty5.handler.codec.TooLongFrameException;
 
@@ -39,7 +39,7 @@ import static io.netty5.util.internal.ObjectUtil.checkPositive;
  * if it contains a matching number of opening and closing braces/brackets. It's up to a subsequent
  * {@link ChannelHandler} to parse the JSON text into a more usable form i.e. a POJO.
  */
-public class JsonObjectDecoder extends ByteToMessageDecoderForBuffer {
+public class JsonObjectDecoder extends ByteToMessageDecoder {
 
     private static final int ST_CORRUPTED = -1;
     private static final int ST_INIT = 0;
@@ -80,7 +80,7 @@ public class JsonObjectDecoder extends ByteToMessageDecoderForBuffer {
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, Buffer in) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, Buffer in) {
         if (state == ST_CORRUPTED) {
             in.skipReadableBytes(in.readableBytes());
             return;

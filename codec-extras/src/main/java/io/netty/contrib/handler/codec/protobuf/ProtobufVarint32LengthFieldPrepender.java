@@ -17,8 +17,7 @@ package io.netty.contrib.handler.codec.protobuf;
 
 import com.google.protobuf.CodedOutputStream;
 import com.google.protobuf.nano.CodedOutputByteBufferNano;
-import io.netty.buffer.ByteBuf;
-import io.netty5.channel.ChannelHandler.Sharable;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.handler.codec.MessageToByteEncoder;
 
@@ -37,22 +36,21 @@ import io.netty5.handler.codec.MessageToByteEncoder;
  * @see CodedOutputStream
  * @see CodedOutputByteBufferNano
  */
-@Sharable
-public class ProtobufVarint32LengthFieldPrepender extends MessageToByteEncoder<ByteBuf> {
+public class ProtobufVarint32LengthFieldPrepender extends MessageToByteEncoder<Buffer> {
 
     /**
-     * Writes protobuf varint32 to (@link ByteBuf).
+     * Writes protobuf varint32 to (@link Buffer).
      *
      * @param out   to be written to
      * @param value to be written
      */
-    static void writeRawVarint32(ByteBuf out, int value) {
+    static void writeRawVarint32(Buffer out, int value) {
         while (true) {
             if ((value & ~0x7F) == 0) {
-                out.writeByte(value);
+                out.writeByte((byte) value);
                 return;
             } else {
-                out.writeByte(value & 0x7F | 0x80);
+                out.writeByte((byte) (value & 0x7F | 0x80));
                 value >>>= 7;
             }
         }
@@ -81,12 +79,21 @@ public class ProtobufVarint32LengthFieldPrepender extends MessageToByteEncoder<B
     }
 
     @Override
-    protected void encode(
-            ChannelHandlerContext ctx, ByteBuf msg, ByteBuf out) throws Exception {
+    protected Buffer allocateBuffer(ChannelHandlerContext ctx, Buffer buffer) {
+        return ctx.bufferAllocator().allocate(0);
+    }
+
+    @Override
+    protected void encode(ChannelHandlerContext ctx, Buffer msg, Buffer out) {
         int bodyLen = msg.readableBytes();
         int headerLen = computeRawVarint32Size(bodyLen);
         out.ensureWritable(headerLen + bodyLen);
         writeRawVarint32(out, bodyLen);
-        out.writeBytes(msg, msg.readerIndex(), bodyLen);
+        out.writeBytes(msg);
+    }
+
+    @Override
+    public boolean isSharable() {
+        return true;
     }
 }

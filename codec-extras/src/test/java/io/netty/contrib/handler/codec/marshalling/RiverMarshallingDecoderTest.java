@@ -15,8 +15,7 @@
  */
 package io.netty.contrib.handler.codec.marshalling;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.embedded.EmbeddedChannel;
 import io.netty5.handler.codec.CodecException;
 import io.netty5.handler.codec.TooLongFrameException;
@@ -24,6 +23,9 @@ import org.jboss.marshalling.MarshallerFactory;
 import org.jboss.marshalling.Marshalling;
 import org.jboss.marshalling.MarshallingConfiguration;
 
+import java.util.List;
+
+import static io.netty5.buffer.api.DefaultBufferAllocators.preferredAllocator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -43,14 +45,14 @@ public class RiverMarshallingDecoderTest extends AbstractMarshallingDecoderTest 
     }
 
     @Override
-    protected ByteBuf input(byte[] input) {
-        ByteBuf length = Unpooled.buffer(4);
+    protected Buffer input(byte[] input) {
+        Buffer length = preferredAllocator().allocate(4);
         length.writeInt(input.length);
-        return Unpooled.wrappedBuffer(length, Unpooled.wrappedBuffer(input));
+        return preferredAllocator().compose(List.of(length.send(), preferredAllocator().copyOf(input).send()));
     }
 
     @Override
-    protected void onTooBigFrame(EmbeddedChannel ch, ByteBuf input) {
+    protected void onTooBigFrame(EmbeddedChannel ch, Buffer input) {
         try {
             ch.writeInbound(input);
             fail();

@@ -15,7 +15,7 @@
  */
 package io.netty.contrib.handler.codec.marshalling;
 
-import io.netty.buffer.ByteBuf;
+import io.netty5.buffer.api.Buffer;
 import org.jboss.marshalling.MarshallerFactory;
 import org.jboss.marshalling.Marshalling;
 import org.jboss.marshalling.MarshallingConfiguration;
@@ -36,8 +36,8 @@ public class RiverMarshallingEncoderTest extends AbstractMarshallingEncoderTest 
     }
 
     @Override
-    protected ByteBuf truncate(ByteBuf buf) {
+    protected Buffer truncate(Buffer buf) {
         buf.readInt();
-        return buf;
+        return buf.split();
     }
 }

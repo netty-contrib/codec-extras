@@ -15,8 +15,8 @@
  */
 package io.netty.contrib.handler.codec.serialization;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufOutputStream;
+import io.netty5.buffer.BufferOutputStream;
+import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.handler.codec.MessageToByteEncoder;
 
@@ -28,7 +28,7 @@ import java.io.Serializable;
 import static io.netty5.util.internal.ObjectUtil.checkPositiveOrZero;
 
 /**
- * An encoder which serializes a Java object into a {@link ByteBuf}
+ * An encoder which serializes a Java object into a {@link Buffer}
  * (interoperability version).
  * <p>
  * This encoder is interoperable with the standard Java object streams such as
@@ -43,6 +43,11 @@ public class CompatibleObjectEncoder extends MessageToByteEncoder<Serializable> 
      */
     public CompatibleObjectEncoder() {
         this(16); // Reset at every sixteen writes
+    }
+
+    @Override
+    protected Buffer allocateBuffer(ChannelHandlerContext ctx, Serializable serializable) {
+        return ctx.bufferAllocator().allocate(256);
     }
 
     /**
@@ -67,8 +72,8 @@ public class CompatibleObjectEncoder extends MessageToByteEncoder<Serializable> 
     }
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, Serializable msg, ByteBuf out) throws Exception {
-        try (ObjectOutputStream oos = newObjectOutputStream(new ByteBufOutputStream(out))) {
+    protected void encode(ChannelHandlerContext ctx, Serializable msg, Buffer out) throws Exception {
+        try (ObjectOutputStream oos = newObjectOutputStream(new BufferOutputStream(out))) {
             if (resetInterval != 0) {
                 // Resetting will prevent OOM on the receiving side.
                 writtenObjects++;
