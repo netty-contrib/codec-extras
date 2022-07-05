@@ -58,7 +58,7 @@ public final class WorldClockClient {
                     .handler(new WorldClockClientInitializer(sslCtx));
 
             // Make a new connection.
-            Channel ch = b.connect(HOST, PORT).get();
+            Channel ch = b.connect(HOST, PORT).asStage().get();
 
             // Get the handler instance to initiate the request.
             WorldClockClientHandler handler = ch.pipeline().get(WorldClockClientHandler.class);
