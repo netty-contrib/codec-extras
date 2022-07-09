@@ -70,7 +70,7 @@ public final class ObjectEchoClient {
                     });
 
             // Start the connection attempt.
-            b.connect(HOST, PORT).asStage().get().closeFuture().sync();
+            b.connect(HOST, PORT).asStage().get().closeFuture().asStage().sync();
         } finally {
             group.shutdownGracefully();
         }

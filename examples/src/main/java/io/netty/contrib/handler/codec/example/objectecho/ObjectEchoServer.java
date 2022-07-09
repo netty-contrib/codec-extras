@@ -72,7 +72,7 @@ public final class ObjectEchoServer {
                     });
 
             // Bind and start to accept incoming connections.
-            b.bind(PORT).asStage().get().closeFuture().sync();
+            b.bind(PORT).asStage().get().closeFuture().asStage().sync();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
