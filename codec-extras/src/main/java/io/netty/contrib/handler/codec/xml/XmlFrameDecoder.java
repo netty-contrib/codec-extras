@@ -25,19 +25,19 @@ import static io.netty5.util.internal.ObjectUtil.checkPositive;
 
 /**
  * A frame decoder for single separate XML based message streams.
- * <p/>
+ * <p>
  * A couple examples will better help illustrate
  * what this decoder actually does.
- * <p/>
+ * <p>
  * Given an input array of bytes split over 3 frames like this:
  * <pre>
  * +-----+-----+-----------+
  * | &lt;an | Xml | Element/&gt; |
  * +-----+-----+-----------+
  * </pre>
- * <p/>
+ * <p>
  * this decoder would output a single frame:
- * <p/>
+ * <p>
  * <pre>
  * +-----------------+
  * | &lt;anXmlElement/&gt; |
@@ -50,21 +50,20 @@ import static io.netty5.util.internal.ObjectUtil.checkPositive;
  * | &lt;an | Xml | Element/&gt; | &lt;ro | ot&gt;&lt;child&gt;content&lt;/child&gt;&lt;/root&gt; |
  * +-----+-----+-----------+-----+----------------------------------+
  * </pre>
- * <p/>
+ * <p>
  * this decoder would output two frames:
- * <p/>
+ * <p>
  * <pre>
  * +-----------------+-------------------------------------+
  * | &lt;anXmlElement/&gt; | &lt;root&gt;&lt;child&gt;content&lt;/child&gt;&lt;/root&gt; |
  * +-----------------+-------------------------------------+
  * </pre>
  * <p>
- * <p/>
  * The byte stream is expected to be in UTF-8 character encoding or ASCII. The current implementation
  * uses direct {@code byte} to {@code char} cast and then compares that {@code char} to a few low range
  * ASCII characters like {@code '<'}, {@code '>'} or {@code '/'}. UTF-8 is not using low range [0..0x7F]
  * byte values for multibyte codepoint representations therefore fully supported by this implementation.
- * <p/>
+ * <p>
  * Please note that this decoder is not suitable for
  * xml streaming protocols such as
  * <a href="https://xmpp.org/rfcs/rfc6120.html">XMPP</a>,
