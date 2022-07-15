@@ -25,13 +25,13 @@ import io.netty5.handler.codec.MessageToByteEncoder;
  * An encoder that prepends the Google Protocol Buffers
  * <a href="https://developers.google.com/protocol-buffers/docs/encoding?csw=1#varints">Base
  * 128 Varints</a> integer length field. For example:
- * <pre>
+ * <pre>{@code
  * BEFORE ENCODE (300 bytes)       AFTER ENCODE (302 bytes)
  * +---------------+               +--------+---------------+
  * | Protobuf Data |-------------->| Length | Protobuf Data |
  * |  (300 bytes)  |               | 0xAC02 |  (300 bytes)  |
  * +---------------+               +--------+---------------+
- * </pre> *
+ * }</pre>
  *
  * @see CodedOutputStream
  * @see CodedOutputByteBufferNano
