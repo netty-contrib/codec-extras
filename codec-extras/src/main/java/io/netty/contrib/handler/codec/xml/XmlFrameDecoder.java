@@ -37,7 +37,6 @@ import static io.netty5.util.internal.ObjectUtil.checkPositive;
  * </pre>
  * <p>
  * this decoder would output a single frame:
- * <p>
  * <pre>
  * +-----------------+
  * | &lt;anXmlElement/&gt; |
@@ -52,7 +51,6 @@ import static io.netty5.util.internal.ObjectUtil.checkPositive;
  * </pre>
  * <p>
  * this decoder would output two frames:
- * <p>
  * <pre>
  * +-----------------+-------------------------------------+
  * | &lt;anXmlElement/&gt; | &lt;root&gt;&lt;child&gt;content&lt;/child&gt;&lt;/root&gt; |
