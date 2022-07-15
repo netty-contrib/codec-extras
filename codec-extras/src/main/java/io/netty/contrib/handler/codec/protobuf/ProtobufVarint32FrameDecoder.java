@@ -27,13 +27,13 @@ import io.netty5.handler.codec.CorruptedFrameException;
  * value of the Google Protocol Buffers
  * <a href="https://developers.google.com/protocol-buffers/docs/encoding#varints">Base
  * 128 Varints</a> integer length field in the message. For example:
- * <pre>{@code
+ * <pre>
  * BEFORE DECODE (302 bytes)       AFTER DECODE (300 bytes)
  * +--------+---------------+      +---------------+
  * | Length | Protobuf Data |----->| Protobuf Data |
  * | 0xAC02 |  (300 bytes)  |      |  (300 bytes)  |
  * +--------+---------------+      +---------------+
- * }</pre>
+ * </pre>
  *
  * @see CodedInputStream
  * @see CodedInputByteBufferNano
