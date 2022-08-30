@@ -20,7 +20,7 @@ import io.netty5.buffer.api.BufferAllocator;
 import io.netty5.channel.embedded.EmbeddedChannel;
 import io.netty5.handler.codec.CorruptedFrameException;
 import io.netty5.handler.codec.TooLongFrameException;
-import io.netty5.util.CharsetUtil;
+import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.Charset;
@@ -46,7 +46,7 @@ public class JsonObjectDecoderTest {
 
         boolean dataAvailable;
         for (String part : array) {
-            dataAvailable = ch.writeInbound(copiedBuffer(ch.bufferAllocator(), part, CharsetUtil.UTF_8));
+            dataAvailable = ch.writeInbound(copiedBuffer(ch.bufferAllocator(), part, StandardCharsets.UTF_8));
             if (indexDataAvailable > 0) {
                 assertFalse(dataAvailable);
             } else {
@@ -57,7 +57,7 @@ public class JsonObjectDecoderTest {
 
         for (String part : result) {
             try(Buffer res = ch.readInbound()) {
-                assertEquals(part, res.toString(CharsetUtil.UTF_8));
+                assertEquals(part, res.toString(StandardCharsets.UTF_8));
             }
         }
 
@@ -73,12 +73,12 @@ public class JsonObjectDecoderTest {
         String objectPart3 = "\"Doe\", age:22   \n}";
 
         // Test object
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(),"  \n\n  " + objectPart1, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(),objectPart2, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(),objectPart3 + "   \n\n  \n", CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(),"  \n\n  " + objectPart1, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(),objectPart2, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(),objectPart3 + "   \n\n  \n", StandardCharsets.UTF_8));
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals(objectPart1 + objectPart2 + objectPart3, res.toString(CharsetUtil.UTF_8));
+            assertEquals(objectPart1 + objectPart2 + objectPart3, res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
@@ -92,13 +92,13 @@ public class JsonObjectDecoderTest {
         String objectPart2 = "hn\"}{\"name\":\"John\"}{\"name\":\"Jo";
         String objectPart3 = "hn\"}";
 
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), objectPart1, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), objectPart2, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), objectPart3, CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), objectPart1, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), objectPart2, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), objectPart3, StandardCharsets.UTF_8));
 
         for (int i = 0; i < 3; i++) {
             try(Buffer res = ch.readInbound()) {
-                assertEquals("{\"name\":\"John\"}", res.toString(CharsetUtil.UTF_8));
+                assertEquals("{\"name\":\"John\"}", res.toString(StandardCharsets.UTF_8));
             }
         }
 
@@ -116,14 +116,14 @@ public class JsonObjectDecoderTest {
         String arrayPart5 = "ssage\"} ]";
 
         // Test array
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), "   " + arrayPart1, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), arrayPart2, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), arrayPart3, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), arrayPart4, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), arrayPart5 + "      ", CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), "   " + arrayPart1, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), arrayPart2, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), arrayPart3, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), arrayPart4, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), arrayPart5 + "      ", StandardCharsets.UTF_8));
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals(arrayPart1 + arrayPart2 + arrayPart3 + arrayPart4 + arrayPart5, res.toString(CharsetUtil.UTF_8));
+            assertEquals(arrayPart1 + arrayPart2 + arrayPart3 + arrayPart4 + arrayPart5, res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
@@ -182,12 +182,12 @@ public class JsonObjectDecoderTest {
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
 
         String json = "{\"foo\" : {\"bar\" : [{},{}]}}";
-        for (byte c : json.getBytes(CharsetUtil.UTF_8)) {
+        for (byte c : json.getBytes(StandardCharsets.UTF_8)) {
             ch.writeInbound(copiedBuffer(ch.bufferAllocator(), new byte[]{c}));
         }
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals(json, res.toString(CharsetUtil.UTF_8));
+            assertEquals(json, res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
@@ -199,10 +199,10 @@ public class JsonObjectDecoderTest {
         // {"foo" : "bar\""}
         String json = "{\"foo\" : \"bar\\\"\"}";
         System.out.println(json);
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), json, CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), json, StandardCharsets.UTF_8));
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals(json, res.toString(CharsetUtil.UTF_8));
+            assertEquals(json, res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
@@ -214,10 +214,10 @@ public class JsonObjectDecoderTest {
         // {"foo" : "bar\\"}
         String json = "{\"foo\" : \"bar\\\\\"}";
         System.out.println(json);
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), json, CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), json, StandardCharsets.UTF_8));
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals(json, res.toString(CharsetUtil.UTF_8));
+            assertEquals(json, res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
@@ -229,10 +229,10 @@ public class JsonObjectDecoderTest {
         // {"foo" : "bar\\\""}
         String json = "{\"foo\" : \"bar\\\\\\\"\"}";
         System.out.println(json);
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), json, CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), json, StandardCharsets.UTF_8));
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals(json, res.toString(CharsetUtil.UTF_8));
+            assertEquals(json, res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
@@ -246,16 +246,16 @@ public class JsonObjectDecoderTest {
                 object2 = "{\"key\" : \"value2\"}",
                 object3 = "{\"key\" : \"value3\"}";
 
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object1 + object2 + object3, CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object1 + object2 + object3, StandardCharsets.UTF_8));
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals(object1, res.toString(CharsetUtil.UTF_8));
+            assertEquals(object1, res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals(object2, res.toString(CharsetUtil.UTF_8));
+            assertEquals(object2, res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals(object3, res.toString(CharsetUtil.UTF_8));
+            assertEquals(object3, res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
@@ -266,7 +266,7 @@ public class JsonObjectDecoderTest {
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
         try {
             assertThrows(CorruptedFrameException.class,
-                    () -> ch.writeInbound(copiedBuffer(ch.bufferAllocator(),"  b [1,2,3]", CharsetUtil.UTF_8)));
+                    () -> ch.writeInbound(copiedBuffer(ch.bufferAllocator(),"  b [1,2,3]", StandardCharsets.UTF_8)));
         } finally {
             assertFalse(ch.finish());
         }
@@ -275,15 +275,15 @@ public class JsonObjectDecoderTest {
     @Test
     public void testNonJsonContent2() {
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), "  [1,2,3]  ", CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), "  [1,2,3]  ", StandardCharsets.UTF_8));
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals("[1,2,3]", res.toString(CharsetUtil.UTF_8));
+            assertEquals("[1,2,3]", res.toString(StandardCharsets.UTF_8));
         }
 
         try {
             assertThrows(CorruptedFrameException.class,
-                    () -> ch.writeInbound(copiedBuffer(ch.bufferAllocator(), " a {\"key\" : 10}", CharsetUtil.UTF_8)));
+                    () -> ch.writeInbound(copiedBuffer(ch.bufferAllocator(), " a {\"key\" : 10}", StandardCharsets.UTF_8)));
         } finally {
             assertFalse(ch.finish());
         }
@@ -294,7 +294,7 @@ public class JsonObjectDecoderTest {
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder(6));
         try {
             assertThrows(TooLongFrameException.class,
-                    () -> ch.writeInbound(copiedBuffer(ch.bufferAllocator(), "[2,4,5]", CharsetUtil.UTF_8)));
+                    () -> ch.writeInbound(copiedBuffer(ch.bufferAllocator(), "[2,4,5]", StandardCharsets.UTF_8)));
         } finally {
             assertFalse(ch.finish());
         }
@@ -308,18 +308,18 @@ public class JsonObjectDecoderTest {
                 object2 = "{\"key\" : \"value2\"}",
                 object3 = "{\"key\" : \"value3\"}";
 
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object1, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object2, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object3, CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object1, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object2, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object3, StandardCharsets.UTF_8));
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals(object1, res.toString(CharsetUtil.UTF_8));
+            assertEquals(object1, res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals(object2, res.toString(CharsetUtil.UTF_8));
+            assertEquals(object2, res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals(object3, res.toString(CharsetUtil.UTF_8));
+            assertEquals(object3, res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
@@ -330,10 +330,10 @@ public class JsonObjectDecoderTest {
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
 
         String object = "{ \"key\" : \"[]{}}\\\"}}'}\"}";
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object, CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object, StandardCharsets.UTF_8));
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals(object, res.toString(CharsetUtil.UTF_8));
+            assertEquals(object, res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
@@ -346,35 +346,35 @@ public class JsonObjectDecoderTest {
         String array = "[  12, \"bla\"  , 13.4   \t  ,{\"key0\" : [1,2], \"key1\" : 12, \"key2\" : {}} , " +
                 "true, false, null, [\"bla\", {}, [1,2,3]] ]";
         String object = "{\"bla\" : \"blub\"}";
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), array, CharsetUtil.UTF_8));
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object, CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), array, StandardCharsets.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), object, StandardCharsets.UTF_8));
 
         try(Buffer res = ch.readInbound()) {
-            assertEquals("12", res.toString(CharsetUtil.UTF_8));
+            assertEquals("12", res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals("\"bla\"", res.toString(CharsetUtil.UTF_8));
+            assertEquals("\"bla\"", res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals("13.4", res.toString(CharsetUtil.UTF_8));
+            assertEquals("13.4", res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals("{\"key0\" : [1,2], \"key1\" : 12, \"key2\" : {}}", res.toString(CharsetUtil.UTF_8));
+            assertEquals("{\"key0\" : [1,2], \"key1\" : 12, \"key2\" : {}}", res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals("true", res.toString(CharsetUtil.UTF_8));
+            assertEquals("true", res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals("false", res.toString(CharsetUtil.UTF_8));
+            assertEquals("false", res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals("null", res.toString(CharsetUtil.UTF_8));
+            assertEquals("null", res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals("[\"bla\", {}, [1,2,3]]", res.toString(CharsetUtil.UTF_8));
+            assertEquals("[\"bla\", {}, [1,2,3]]", res.toString(StandardCharsets.UTF_8));
         }
         try(Buffer res = ch.readInbound()) {
-            assertEquals(object, res.toString(CharsetUtil.UTF_8));
+            assertEquals(object, res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
@@ -389,21 +389,21 @@ public class JsonObjectDecoderTest {
 
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
 
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), part1, CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), part1, StandardCharsets.UTF_8));
         try(Buffer res = ch.readInbound()) {
             assertEquals("{\"a\":{\"b\":{\"c\":{ \"d\":\"27301\", \"med\":\"d\", \"path\":\"27310\"} }, " +
-                    "\"status\":\"OK\" } }", res.toString(CharsetUtil.UTF_8));
+                    "\"status\":\"OK\" } }", res.toString(StandardCharsets.UTF_8));
         }
 
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), part2, CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), part2, StandardCharsets.UTF_8));
         try(Buffer res = ch.readInbound()) {
             assertNull(res);
         }
 
-        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), "}}]}]}]}}}}", CharsetUtil.UTF_8));
+        ch.writeInbound(copiedBuffer(ch.bufferAllocator(), "}}]}]}]}}}}", StandardCharsets.UTF_8));
         try(Buffer res = ch.readInbound()) {
             assertEquals("{\"a\":{\"b\":{\"c\":{\"ory\":[{\"competi\":[{\"event\":[{" + "\"externalI\":{" +
-                    "\"external\":[{\"id\":\"O\"} ]}}]}]}]}}}}", res.toString(CharsetUtil.UTF_8));
+                    "\"external\":[{\"id\":\"O\"} ]}}]}]}]}}}}", res.toString(StandardCharsets.UTF_8));
         }
 
         assertFalse(ch.finish());
