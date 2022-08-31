@@ -20,7 +20,7 @@ import io.netty5.buffer.api.Buffer;
 import io.netty5.channel.embedded.EmbeddedChannel;
 import io.netty5.handler.codec.CorruptedFrameException;
 import io.netty5.handler.codec.TooLongFrameException;
-import io.netty5.util.CharsetUtil;
+import java.nio.charset.StandardCharsets;
 import io.netty5.util.internal.EmptyArrays;
 import org.junit.jupiter.api.Test;
 
@@ -55,7 +55,7 @@ public class XmlFrameDecoderTest {
         Exception cause = null;
         try {
             for (String xmlFrame : xmlFrames) {
-                ch.writeInbound(ch.bufferAllocator().copyOf(xmlFrame, CharsetUtil.UTF_8));
+                ch.writeInbound(ch.bufferAllocator().copyOf(xmlFrame, StandardCharsets.UTF_8));
             }
         } catch (Exception e) {
             cause = e;
@@ -66,7 +66,7 @@ public class XmlFrameDecoderTest {
                 if (buf == null) {
                     break;
                 }
-                actual.add(buf.toString(CharsetUtil.UTF_8));
+                actual.add(buf.toString(StandardCharsets.UTF_8));
             }
         }
 
@@ -102,7 +102,7 @@ public class XmlFrameDecoderTest {
         XmlFrameDecoder decoder = new XmlFrameDecoder(3);
         EmbeddedChannel ch = new EmbeddedChannel(decoder);
         assertThrows(TooLongFrameException.class,
-                () -> ch.writeInbound(ch.bufferAllocator().copyOf("<v/>", CharsetUtil.UTF_8)));
+                () -> ch.writeInbound(ch.bufferAllocator().copyOf("<v/>", StandardCharsets.UTF_8)));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class XmlFrameDecoderTest {
         XmlFrameDecoder decoder = new XmlFrameDecoder(1048576);
         EmbeddedChannel ch = new EmbeddedChannel(decoder);
         assertThrows(CorruptedFrameException.class,
-                () -> ch.writeInbound(ch.bufferAllocator().copyOf("invalid XML", CharsetUtil.UTF_8)));
+                () -> ch.writeInbound(ch.bufferAllocator().copyOf("invalid XML", StandardCharsets.UTF_8)));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class XmlFrameDecoderTest {
         XmlFrameDecoder decoder = new XmlFrameDecoder(1048576);
         EmbeddedChannel ch = new EmbeddedChannel(decoder);
         assertThrows(CorruptedFrameException.class,
-                () -> ch.writeInbound(ch.bufferAllocator().copyOf("invalid XML<foo/>", CharsetUtil.UTF_8)));
+                () -> ch.writeInbound(ch.bufferAllocator().copyOf("invalid XML<foo/>", StandardCharsets.UTF_8)));
     }
 
     @Test
