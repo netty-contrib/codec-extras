@@ -66,7 +66,8 @@ public class MarshallingDecoder extends LengthFieldBasedFrameDecoder {
 
         // Call close in a finally block as the ReplayingDecoder will throw an Error if not enough bytes are
         // readable. This helps to be sure that we do not leak resource
-        try (Unmarshaller unmarshaller = provider.getUnmarshaller(ctx)) {
+        try (frame;
+             Unmarshaller unmarshaller = provider.getUnmarshaller(ctx)) {
             ByteInput input = new ChannelBufferByteInput(frame);
             unmarshaller.start(input);
             Object obj = unmarshaller.readObject();
