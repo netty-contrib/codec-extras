@@ -16,7 +16,7 @@
 package io.netty.contrib.handler.codec.serialization;
 
 import io.netty5.buffer.BufferOutputStream;
-import io.netty5.buffer.api.Buffer;
+import io.netty5.buffer.Buffer;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -24,7 +24,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-import static io.netty5.buffer.api.DefaultBufferAllocators.preferredAllocator;
+import static io.netty5.buffer.DefaultBufferAllocators.preferredAllocator;
 import static java.util.Objects.requireNonNull;
 
 /**

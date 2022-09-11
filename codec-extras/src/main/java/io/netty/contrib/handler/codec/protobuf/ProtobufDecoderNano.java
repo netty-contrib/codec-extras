@@ -16,7 +16,7 @@
 package io.netty.contrib.handler.codec.protobuf;
 
 import com.google.protobuf.nano.MessageNano;
-import io.netty5.buffer.api.Buffer;
+import io.netty5.buffer.Buffer;
 import io.netty5.channel.ChannelHandlerContext;
 import io.netty5.channel.ChannelPipeline;
 import io.netty5.handler.codec.ByteToMessageDecoder;
